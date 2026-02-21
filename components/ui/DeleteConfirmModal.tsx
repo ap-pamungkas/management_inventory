@@ -74,7 +74,7 @@ export default function DeleteConfirmModal({
                   label="Batal"
                   onClick={onClose}
                   disabled={isLoading}
-                  className="w-full bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 py-3 font-medium"
+                  className="w-full bg-slate-600 text-white hover:bg-slate-700 py-3 font-medium"
                 />
               </div>
             </div>
