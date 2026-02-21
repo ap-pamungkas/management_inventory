@@ -13,7 +13,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
       </div>
       <MenuItem icon={<House />} label="Dashboard" href="/admin" />
       <MenuItem icon={<Box />} label="Items" href="/admin/items" />
-      <MenuItem icon={<Boxes />} label="Rack" href="/rack" />
+      <MenuItem icon={<Boxes />} label="Rack" href="/admin/rack" />
     </div>
   );
 };

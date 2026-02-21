@@ -1,23 +1,23 @@
 "use client";
 
 import { useState } from "react";
+import { useRacks } from "@/hooks/useRacks";
+import type { Rack } from "@/types/rack";
 import AdminLayout from "@/components/layout/Admin";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import FormModal from "@/components/ui/FormModal";
+import RackForm from "@/components/rack/rackForm/RackForm";
+import RackTable from "@/components/rack/RackTable";
 import DeleteConfirmModal from "@/components/ui/DeleteConfirmModal";
-import ItemTable from "@/components/item/ItemTable";
-import ItemForm from "@/components/item/ItemForm";
+import toast from "react-hot-toast";
 import LimitSelector from "@/components/ui/LimitSelector";
 import Pagination from "@/components/ui/Pagination";
 import SearchInput from "@/components/ui/SearchInput";
-import { useItems } from "@/hooks/useItems";
-import type { Item } from "@/types/item";
-import toast from "react-hot-toast";
 
-export default function ItemsPage() {
+export default function RackPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<Item | undefined>(undefined);
+  const [selectedRack, setSelectedRack] = useState<Rack | undefined>(undefined);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -33,40 +33,40 @@ export default function ItemsPage() {
     isLoading,
     refresh,
     totalPages,
-  } = useItems();
+  } = useRacks();
 
-  const handleEdit = (item: Item) => {
-    setSelectedItem(item);
+  const handleEdit = (rack: Rack) => {
+    setSelectedRack(rack);
     setIsModalOpen(true);
   };
 
-  const handleDelete = (item: Item) => {
-    setSelectedItem(item);
+  const handleDelete = (rack: Rack) => {
+    setSelectedRack(rack);
     setIsDeleteModalOpen(true);
   };
 
   const handleConfirmDelete = async () => {
-    if (!selectedItem) return;
+    if (!selectedRack) return;
 
     setIsDeleting(true);
-    const toastId = toast.loading("Menghapus barang...");
+    const toastId = toast.loading("Menghapus rak...");
     try {
-      const response = await fetch("/api/item", {
+      const response = await fetch("/api/rack", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id: selectedItem.id }),
+        body: JSON.stringify({ id: selectedRack.id }),
       });
 
       if (!response.ok) {
         const error = await response.json();
-        throw new Error(error.error || "Gagal menghapus barang");
+        throw new Error(error.error || "Gagal menghapus rak");
       }
 
-      toast.success("Barang berhasil dihapus!", { id: toastId });
+      toast.success("Rak berhasil dihapus!", { id: toastId });
       setIsDeleteModalOpen(false);
-      setSelectedItem(undefined);
+      setSelectedRack(undefined);
       refresh();
     } catch (error: any) {
       toast.error(error.message || "Terjadi kesalahan", { id: toastId });
@@ -77,24 +77,24 @@ export default function ItemsPage() {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setSelectedItem(undefined);
+    setSelectedRack(undefined);
   };
 
   const handleCloseDeleteModal = () => {
     setIsDeleteModalOpen(false);
-    if (!isModalOpen) setSelectedItem(undefined);
+    if (!isModalOpen) setSelectedRack(undefined);
   };
 
   return (
     <AdminLayout>
       <Card
-        title="Daftar Barang"
+        title="Daftar Rak"
         additionalButton={
           <Button
             type="button"
-            label="Tambah Barang"
+            label="Tambah Rak"
             onClick={() => {
-              setSelectedItem(undefined);
+              setSelectedRack(undefined);
               setIsModalOpen(true);
             }}
             className="bg-blue-600 text-white font-medium shadow-md shadow-blue-100 px-5"
@@ -105,13 +105,13 @@ export default function ItemsPage() {
           <SearchInput
             value={search}
             onChange={setSearch}
-            placeholder="Cari nama atau deskripsi barang..."
+            placeholder="Cari nama, kode, atau deskripsi..."
             className="sm:max-w-xs"
           />
           <LimitSelector value={limit} onChange={setLimit} />
         </div>
 
-        <ItemTable
+        <RackTable
           data={data}
           isLoading={isLoading}
           page={page}
@@ -132,10 +132,10 @@ export default function ItemsPage() {
       <FormModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        title={selectedItem ? "Edit Barang" : "Tambah Barang Baru"}
+        title={selectedRack ? "Edit Rak" : "Tambah Rak Baru"}
       >
-        <ItemForm
-          initialData={selectedItem}
+        <RackForm
+          initialData={selectedRack}
           onSuccess={() => {
             handleCloseModal();
             refresh();
@@ -148,8 +148,8 @@ export default function ItemsPage() {
         isOpen={isDeleteModalOpen}
         onClose={handleCloseDeleteModal}
         onConfirm={handleConfirmDelete}
-        title="Hapus Barang"
-        message={`Apakah Anda yakin ingin menghapus barang "${selectedItem?.name}"? Tindakan ini tidak dapat dibatalkan.`}
+        title="Hapus Rak"
+        message={`Apakah Anda yakin ingin menghapus rak "${selectedRack?.name}"? Tindakan ini tidak dapat dibatalkan.`}
         isLoading={isDeleting}
       />
     </AdminLayout>

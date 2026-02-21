@@ -1,85 +1,75 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { CreateRackSchema } from "@/lib/zod-schemas/rack";
+import { CreateItemSchema } from "@/lib/zod-schemas/item";
 
-// GET DATA RACK WITH PAGINATION AND FILTER
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    // pagination
     const page = parseInt(searchParams.get("page") || "1");
     const limitParam = searchParams.get("limit") || "10";
     const limit = limitParam === "all" ? 1000000 : parseInt(limitParam);
-    // filter
     const search = searchParams.get("search") || "";
-    const MIN_PAGE = 1;
-    const skip = (page - MIN_PAGE) * limit;
+
+    const skip = (page - 1) * limit;
 
     const [data, total] = await Promise.all([
-      prisma.rack.findMany({
+      prisma.item.findMany({
         skip,
         take: limit,
         where: {
           OR: [
             { name: { contains: search, mode: "insensitive" } },
-            { code_rack: { contains: search, mode: "insensitive" } },
             { description: { contains: search, mode: "insensitive" } },
           ],
         },
+        include: {
+          rack: true,
+        },
+        orderBy: {
+          updatedAt: "desc",
+        },
       }),
-      prisma.rack.count({
+      prisma.item.count({
         where: {
           OR: [
             { name: { contains: search, mode: "insensitive" } },
-            { code_rack: { contains: search, mode: "insensitive" } },
             { description: { contains: search, mode: "insensitive" } },
           ],
         },
       }),
     ]);
+
     return NextResponse.json({ data, total });
-  } catch (error: unknown) {
-    return NextResponse.json({ error: "Failed to get racks" }, { status: 500 });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Gagal mengambil data barang" },
+      { status: 500 },
+    );
   }
 }
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-
-    // 1. Validasi struktur data dengan Zod
-    const validation = CreateRackSchema.safeParse(body);
+    const validation = CreateItemSchema.safeParse(body);
 
     if (!validation.success) {
       return NextResponse.json(
-        {
-          errors: validation.error.flatten().fieldErrors,
-        },
+        { errors: validation.error.flatten().fieldErrors },
         { status: 400 },
       );
     }
 
-    const { name, description } = validation.data;
-
-    // 2. Generate automatic code_rack: R-1, R-2...
-    const count = await prisma.rack.count();
-    const generatedCode = `R-${count + 1}`;
-
-    // 3. Simpan ke database
-    const result = await prisma.rack.create({
+    const result = await prisma.item.create({
       data: {
-        name,
-        code_rack: generatedCode,
-        description,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        ...validation.data,
       },
     });
 
     return NextResponse.json(result, { status: 201 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Gagal menyimpan data" },
+      { error: "Gagal menyimpan data barang" },
       { status: 500 },
     );
   }
@@ -88,25 +78,34 @@ export async function POST(request: Request) {
 export async function PATCH(request: Request) {
   try {
     const body = await request.json();
-    const { id, name, description } = body;
+    const { id, ...data } = body;
 
     if (!id) {
-      return NextResponse.json({ error: "ID rak diperlukan" }, { status: 400 });
+      return NextResponse.json(
+        { error: "ID barang diperlukan" },
+        { status: 400 },
+      );
     }
 
-    const result = await prisma.rack.update({
+    const validation = CreateItemSchema.safeParse(data);
+    if (!validation.success) {
+      return NextResponse.json(
+        { errors: validation.error.flatten().fieldErrors },
+        { status: 400 },
+      );
+    }
+
+    const result = await prisma.item.update({
       where: { id: parseInt(id) },
       data: {
-        name,
-        description,
-        updatedAt: new Date(),
+        ...validation.data,
       },
     });
 
     return NextResponse.json(result);
   } catch (error) {
     return NextResponse.json(
-      { error: "Gagal memperbarui data rak" },
+      { error: "Gagal memperbarui data barang" },
       { status: 500 },
     );
   }
@@ -117,17 +116,20 @@ export async function DELETE(request: Request) {
     const { id } = await request.json();
 
     if (!id) {
-      return NextResponse.json({ error: "ID rak diperlukan" }, { status: 400 });
+      return NextResponse.json(
+        { error: "ID barang diperlukan" },
+        { status: 400 },
+      );
     }
 
-    const result = await prisma.rack.delete({
+    const result = await prisma.item.delete({
       where: { id: parseInt(id) },
     });
 
     return NextResponse.json(result);
   } catch (error) {
     return NextResponse.json(
-      { error: "Gagal menghapus data rak" },
+      { error: "Gagal menghapus data barang" },
       { status: 500 },
     );
   }

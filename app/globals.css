@@ -63,16 +63,15 @@ body {
   transition: margin-left 0.5s;
 }
 
-
-
-td, th {
-  border: 1px solid #dddddd;
+td,
+th {
+  border: 1px solid #ffffff;
   text-align: left;
   padding: 8px;
 }
 
 tr:nth-child(even) {
-  background-color: #dddddd;
+  background-color: #ffffff;
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */

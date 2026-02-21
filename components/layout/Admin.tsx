@@ -19,7 +19,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
         <Header onToggle={handleToggle} isOpen={isOpen} />
 
         <div className="content p-4">
-          <div className="container shadow px-4 rounded py-4">{children}</div>
+          <div className="container  px-4  py-4">{children}</div>
         </div>
       </div>
     </>
