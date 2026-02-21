@@ -12,8 +12,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
         <h1 className="text-2xl font-bold text-white font-size-2xl">MANTRI</h1>
       </div>
       <MenuItem icon={<House />} label="Dashboard" href="/admin" />
-      <MenuItem icon={<Box />} label="Items" href="/admin/items" />
-      <MenuItem icon={<Boxes />} label="Rack" href="/admin/rack" />
+      <MenuItem icon={<Box />} label="Barang" href="/admin/items" />
+      <MenuItem icon={<Boxes />} label="Rak" href="/admin/rack" />
     </div>
   );
 };
