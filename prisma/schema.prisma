@@ -28,6 +28,10 @@ model Rack {
   code_rack   String   @unique
   items       Item[]
   description String?
+  posX        Float    @default(0)
+  posY        Float    @default(0)
+  width       Float    @default(10)
+  height      Float    @default(10)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

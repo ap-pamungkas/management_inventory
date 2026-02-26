@@ -10,9 +10,10 @@ interface ItemTableProps {
   data: Item[];
   isLoading: boolean;
   page: number;
-  limit: number;
+  limit: number | "all";
   onEdit: (item: Item) => void;
   onDelete: (item: Item) => void;
+  onLocate: (item: Item) => void;
 }
 
 export default function ItemTable({
@@ -22,6 +23,7 @@ export default function ItemTable({
   limit,
   onEdit,
   onDelete,
+  onLocate,
 }: ItemTableProps) {
   if (isLoading) {
     return <ItemTableSkeleton />;
@@ -51,7 +53,7 @@ export default function ItemTable({
         {data.map((item, index) => (
           <tr key={item.id} className="hover:bg-gray-50 transition-colors">
             <td className="px-4 py-3 text-sm text-center">
-              {(page - 1) * limit + index + 1}
+              {limit === "all" ? index + 1 : (page - 1) * limit + index + 1}
             </td>
             <td className="px-4 py-3 text-sm font-medium text-gray-900">
               <div className="flex flex-col">
@@ -88,6 +90,11 @@ export default function ItemTable({
             </td>
             <td className="px-4 py-3 text-sm">
               <div className="flex justify-center gap-2">
+                <Button
+                  label="Map"
+                  onClick={() => onLocate(item)}
+                  className="bg-indigo-500 text-white hover:bg-indigo-600 border-none px-3 py-1.5 text-xs"
+                />
                 <Button
                   label="Edit"
                   onClick={() => onEdit(item)}

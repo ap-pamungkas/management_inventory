@@ -684,6 +684,10 @@ export const RackScalarFieldEnum = {
   name: 'name',
   code_rack: 'code_rack',
   description: 'description',
+  posX: 'posX',
+  posY: 'posY',
+  width: 'width',
+  height: 'height',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

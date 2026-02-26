@@ -1,8 +1,8 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CreateRackSchema } from "@/lib/zod-schemas/rack";
+import { CreateRackSchema, CreateRackType } from "@/lib/zod-schemas/rack";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
@@ -18,16 +18,20 @@ export const useRackForm = ({
   const router = useRouter();
   const isEditing = !!initialData?.id;
 
-  const form = useForm<CreateRackSchema>({
-    resolver: zodResolver(CreateRackSchema),
+  const form = useForm<CreateRackType>({
+    resolver: zodResolver(CreateRackSchema) as any,
     defaultValues: {
-      name: initialData?.name || "",
-      code_rack: initialData?.code_rack || "",
-      description: initialData?.description || "",
+      name: initialData?.name ?? "",
+      code_rack: initialData?.code_rack ?? "",
+      description: initialData?.description ?? "",
+      posX: initialData?.posX ?? 0,
+      posY: initialData?.posY ?? 0,
+      width: initialData?.width ?? 10,
+      height: initialData?.height ?? 10,
     },
   });
 
-  const onSubmit = async (data: CreateRackSchema) => {
+  const onSubmit: SubmitHandler<CreateRackType> = async (data) => {
     const toastId = toast.loading(
       isEditing ? "Memperbarui data rak..." : "Menyimpan data rak...",
     );
@@ -72,7 +76,7 @@ export const useRackForm = ({
 
   return {
     form,
-    onSubmit: form.handleSubmit(onSubmit),
+    onSubmit: form.handleSubmit(onSubmit as any),
     isLoading: form.formState.isSubmitting,
     isEditing,
   };

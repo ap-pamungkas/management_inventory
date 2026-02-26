@@ -6,7 +6,7 @@ interface PaginationProps {
   currentPage: number;
   totalPages: number;
   totalItems: number;
-  limit: number;
+  limit: number | "all";
   onPageChange: (page: number) => void;
 }
 
@@ -42,11 +42,17 @@ export default function Pagination({
           <p className="text-sm text-gray-700">
             Menampilkan{" "}
             <span className="font-medium">
-              {totalItems > 0 ? (currentPage - 1) * limit + 1 : 0}
+              {totalItems > 0
+                ? limit === "all"
+                  ? 1
+                  : (currentPage - 1) * limit + 1
+                : 0}
             </span>{" "}
             sampai{" "}
             <span className="font-medium">
-              {Math.min(currentPage * limit, totalItems)}
+              {limit === "all"
+                ? totalItems
+                : Math.min(currentPage * limit, totalItems)}
             </span>{" "}
             dari <span className="font-medium">{totalItems}</span> data
           </p>

@@ -3,16 +3,16 @@
 import React from "react";
 
 interface LimitSelectorProps {
-  value: number;
-  onChange: (limit: number) => void;
+  value: number | "all";
+  onChange: (limit: number | "all") => void;
 }
 
-const limits = [
+const limits: { label: string; value: number | "all" }[] = [
   { label: "10", value: 10 },
   { label: "25", value: 25 },
   { label: "50", value: 50 },
   { label: "100", value: 100 },
-  { label: "Semua", value: 1000000 },
+  { label: "Semua", value: "all" },
 ];
 
 export default function LimitSelector({ value, onChange }: LimitSelectorProps) {
@@ -23,7 +23,10 @@ export default function LimitSelector({ value, onChange }: LimitSelectorProps) {
       </span>
       <select
         value={value}
-        onChange={(e) => onChange(parseInt(e.target.value))}
+        onChange={(e) => {
+          const val = e.target.value;
+          onChange(val === "all" ? "all" : parseInt(val));
+        }}
         className="block px-2 py-1.5 text-sm text-center font-medium text-gray-700 bg-white border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all cursor-pointer hover:border-gray-400"
       >
         {limits.map((opt) => (

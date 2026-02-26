@@ -4,11 +4,11 @@ import { useState, useEffect, useCallback } from "react";
 import type { Rack } from "@/types/rack";
 import toast from "react-hot-toast";
 
-export const useRacks = () => {
+export const useRacks = (initialLimit: number | "all" = 10) => {
   const [data, setData] = useState<Rack[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState<number | "all">(initialLimit);
   const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
@@ -59,6 +59,6 @@ export const useRacks = () => {
     isLoading,
     refresh: fetchRacks,
     totalPages:
-      limit === 1000000 ? 1 : Math.ceil(total / (limit === 0 ? total : limit)),
+      limit === "all" ? 1 : Math.ceil(total / (limit === 0 ? total : limit)),
   };
 };

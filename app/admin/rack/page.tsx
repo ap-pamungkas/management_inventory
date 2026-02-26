@@ -14,12 +14,15 @@ import toast from "react-hot-toast";
 import LimitSelector from "@/components/ui/LimitSelector";
 import Pagination from "@/components/ui/Pagination";
 import SearchInput from "@/components/ui/SearchInput";
+import WarehouseMap from "@/components/rack/WarehouseMap";
+import { Move } from "lucide-react";
 
 export default function RackPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRack, setSelectedRack] = useState<Rack | undefined>(undefined);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isMapOpen, setIsMapOpen] = useState(false);
 
   const {
     data,
@@ -90,15 +93,24 @@ export default function RackPage() {
       <Card
         title="Daftar Rak"
         additionalButton={
-          <Button
-            type="button"
-            label="Tambah Rak"
-            onClick={() => {
-              setSelectedRack(undefined);
-              setIsModalOpen(true);
-            }}
-            className="bg-blue-600 text-white font-medium shadow-md shadow-blue-100 px-5"
-          />
+          <div className="flex gap-2">
+            <Button
+              type="button"
+              label="Visualisasi Peta"
+              icon={<Move size={18} />}
+              onClick={() => setIsMapOpen(true)}
+              className="bg-slate-700 text-white font-medium shadow-md shadow-slate-100 px-5"
+            />
+            <Button
+              type="button"
+              label="Tambah Rak"
+              onClick={() => {
+                setSelectedRack(undefined);
+                setIsModalOpen(true);
+              }}
+              className="bg-blue-600 text-white font-medium shadow-md shadow-blue-100 px-5"
+            />
+          </div>
         }
       >
         <div className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -152,6 +164,26 @@ export default function RackPage() {
         message={`Apakah Anda yakin ingin menghapus rak "${selectedRack?.name}"? Tindakan ini tidak dapat dibatalkan.`}
         isLoading={isDeleting}
       />
+
+      <FormModal
+        isOpen={isMapOpen}
+        onClose={() => setIsMapOpen(false)}
+        title="Peta Warehouse (Layout Rak)"
+      >
+        <div className="space-y-4">
+          <WarehouseMap
+            racks={data}
+            interactive
+            onRackClick={(rack) => {
+              handleEdit(rack as any);
+              setIsMapOpen(false);
+            }}
+          />
+          <p className="text-xs text-slate-500 text-center italic">
+            Klik pada rak untuk mengedit posisi atau detail.
+          </p>
+        </div>
+      </FormModal>
     </AdminLayout>
   );
 }

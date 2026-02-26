@@ -28,10 +28,18 @@ export type AggregateRack = {
 
 export type RackAvgAggregateOutputType = {
   id: number | null
+  posX: number | null
+  posY: number | null
+  width: number | null
+  height: number | null
 }
 
 export type RackSumAggregateOutputType = {
   id: number | null
+  posX: number | null
+  posY: number | null
+  width: number | null
+  height: number | null
 }
 
 export type RackMinAggregateOutputType = {
@@ -39,6 +47,10 @@ export type RackMinAggregateOutputType = {
   name: string | null
   code_rack: string | null
   description: string | null
+  posX: number | null
+  posY: number | null
+  width: number | null
+  height: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -48,6 +60,10 @@ export type RackMaxAggregateOutputType = {
   name: string | null
   code_rack: string | null
   description: string | null
+  posX: number | null
+  posY: number | null
+  width: number | null
+  height: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -57,6 +73,10 @@ export type RackCountAggregateOutputType = {
   name: number
   code_rack: number
   description: number
+  posX: number
+  posY: number
+  width: number
+  height: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -65,10 +85,18 @@ export type RackCountAggregateOutputType = {
 
 export type RackAvgAggregateInputType = {
   id?: true
+  posX?: true
+  posY?: true
+  width?: true
+  height?: true
 }
 
 export type RackSumAggregateInputType = {
   id?: true
+  posX?: true
+  posY?: true
+  width?: true
+  height?: true
 }
 
 export type RackMinAggregateInputType = {
@@ -76,6 +104,10 @@ export type RackMinAggregateInputType = {
   name?: true
   code_rack?: true
   description?: true
+  posX?: true
+  posY?: true
+  width?: true
+  height?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -85,6 +117,10 @@ export type RackMaxAggregateInputType = {
   name?: true
   code_rack?: true
   description?: true
+  posX?: true
+  posY?: true
+  width?: true
+  height?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -94,6 +130,10 @@ export type RackCountAggregateInputType = {
   name?: true
   code_rack?: true
   description?: true
+  posX?: true
+  posY?: true
+  width?: true
+  height?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -190,6 +230,10 @@ export type RackGroupByOutputType = {
   name: string
   code_rack: string
   description: string | null
+  posX: number
+  posY: number
+  width: number
+  height: number
   createdAt: Date
   updatedAt: Date
   _count: RackCountAggregateOutputType | null
@@ -222,6 +266,10 @@ export type RackWhereInput = {
   name?: Prisma.StringFilter<"Rack"> | string
   code_rack?: Prisma.StringFilter<"Rack"> | string
   description?: Prisma.StringNullableFilter<"Rack"> | string | null
+  posX?: Prisma.FloatFilter<"Rack"> | number
+  posY?: Prisma.FloatFilter<"Rack"> | number
+  width?: Prisma.FloatFilter<"Rack"> | number
+  height?: Prisma.FloatFilter<"Rack"> | number
   createdAt?: Prisma.DateTimeFilter<"Rack"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Rack"> | Date | string
   items?: Prisma.ItemListRelationFilter
@@ -232,6 +280,10 @@ export type RackOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   code_rack?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  posX?: Prisma.SortOrder
+  posY?: Prisma.SortOrder
+  width?: Prisma.SortOrder
+  height?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   items?: Prisma.ItemOrderByRelationAggregateInput
@@ -245,6 +297,10 @@ export type RackWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.RackWhereInput | Prisma.RackWhereInput[]
   name?: Prisma.StringFilter<"Rack"> | string
   description?: Prisma.StringNullableFilter<"Rack"> | string | null
+  posX?: Prisma.FloatFilter<"Rack"> | number
+  posY?: Prisma.FloatFilter<"Rack"> | number
+  width?: Prisma.FloatFilter<"Rack"> | number
+  height?: Prisma.FloatFilter<"Rack"> | number
   createdAt?: Prisma.DateTimeFilter<"Rack"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Rack"> | Date | string
   items?: Prisma.ItemListRelationFilter
@@ -255,6 +311,10 @@ export type RackOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   code_rack?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  posX?: Prisma.SortOrder
+  posY?: Prisma.SortOrder
+  width?: Prisma.SortOrder
+  height?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.RackCountOrderByAggregateInput
@@ -272,6 +332,10 @@ export type RackScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Rack"> | string
   code_rack?: Prisma.StringWithAggregatesFilter<"Rack"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Rack"> | string | null
+  posX?: Prisma.FloatWithAggregatesFilter<"Rack"> | number
+  posY?: Prisma.FloatWithAggregatesFilter<"Rack"> | number
+  width?: Prisma.FloatWithAggregatesFilter<"Rack"> | number
+  height?: Prisma.FloatWithAggregatesFilter<"Rack"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Rack"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Rack"> | Date | string
 }
@@ -280,6 +344,10 @@ export type RackCreateInput = {
   name: string
   code_rack: string
   description?: string | null
+  posX?: number
+  posY?: number
+  width?: number
+  height?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.ItemCreateNestedManyWithoutRackInput
@@ -290,6 +358,10 @@ export type RackUncheckedCreateInput = {
   name: string
   code_rack: string
   description?: string | null
+  posX?: number
+  posY?: number
+  width?: number
+  height?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.ItemUncheckedCreateNestedManyWithoutRackInput
@@ -299,6 +371,10 @@ export type RackUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   code_rack?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  posX?: Prisma.FloatFieldUpdateOperationsInput | number
+  posY?: Prisma.FloatFieldUpdateOperationsInput | number
+  width?: Prisma.FloatFieldUpdateOperationsInput | number
+  height?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.ItemUpdateManyWithoutRackNestedInput
@@ -309,6 +385,10 @@ export type RackUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   code_rack?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  posX?: Prisma.FloatFieldUpdateOperationsInput | number
+  posY?: Prisma.FloatFieldUpdateOperationsInput | number
+  width?: Prisma.FloatFieldUpdateOperationsInput | number
+  height?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.ItemUncheckedUpdateManyWithoutRackNestedInput
@@ -319,6 +399,10 @@ export type RackCreateManyInput = {
   name: string
   code_rack: string
   description?: string | null
+  posX?: number
+  posY?: number
+  width?: number
+  height?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -327,6 +411,10 @@ export type RackUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   code_rack?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  posX?: Prisma.FloatFieldUpdateOperationsInput | number
+  posY?: Prisma.FloatFieldUpdateOperationsInput | number
+  width?: Prisma.FloatFieldUpdateOperationsInput | number
+  height?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -336,6 +424,10 @@ export type RackUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   code_rack?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  posX?: Prisma.FloatFieldUpdateOperationsInput | number
+  posY?: Prisma.FloatFieldUpdateOperationsInput | number
+  width?: Prisma.FloatFieldUpdateOperationsInput | number
+  height?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -345,12 +437,20 @@ export type RackCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   code_rack?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  posX?: Prisma.SortOrder
+  posY?: Prisma.SortOrder
+  width?: Prisma.SortOrder
+  height?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type RackAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  posX?: Prisma.SortOrder
+  posY?: Prisma.SortOrder
+  width?: Prisma.SortOrder
+  height?: Prisma.SortOrder
 }
 
 export type RackMaxOrderByAggregateInput = {
@@ -358,6 +458,10 @@ export type RackMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   code_rack?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  posX?: Prisma.SortOrder
+  posY?: Prisma.SortOrder
+  width?: Prisma.SortOrder
+  height?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -367,12 +471,20 @@ export type RackMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   code_rack?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  posX?: Prisma.SortOrder
+  posY?: Prisma.SortOrder
+  width?: Prisma.SortOrder
+  height?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type RackSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  posX?: Prisma.SortOrder
+  posY?: Prisma.SortOrder
+  width?: Prisma.SortOrder
+  height?: Prisma.SortOrder
 }
 
 export type RackScalarRelationFilter = {
@@ -382,6 +494,14 @@ export type RackScalarRelationFilter = {
 
 export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
+}
+
+export type FloatFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type RackCreateNestedOneWithoutItemsInput = {
@@ -402,6 +522,10 @@ export type RackCreateWithoutItemsInput = {
   name: string
   code_rack: string
   description?: string | null
+  posX?: number
+  posY?: number
+  width?: number
+  height?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -411,6 +535,10 @@ export type RackUncheckedCreateWithoutItemsInput = {
   name: string
   code_rack: string
   description?: string | null
+  posX?: number
+  posY?: number
+  width?: number
+  height?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -435,6 +563,10 @@ export type RackUpdateWithoutItemsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   code_rack?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  posX?: Prisma.FloatFieldUpdateOperationsInput | number
+  posY?: Prisma.FloatFieldUpdateOperationsInput | number
+  width?: Prisma.FloatFieldUpdateOperationsInput | number
+  height?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -444,6 +576,10 @@ export type RackUncheckedUpdateWithoutItemsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   code_rack?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  posX?: Prisma.FloatFieldUpdateOperationsInput | number
+  posY?: Prisma.FloatFieldUpdateOperationsInput | number
+  width?: Prisma.FloatFieldUpdateOperationsInput | number
+  height?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -484,6 +620,10 @@ export type RackSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   name?: boolean
   code_rack?: boolean
   description?: boolean
+  posX?: boolean
+  posY?: boolean
+  width?: boolean
+  height?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   items?: boolean | Prisma.Rack$itemsArgs<ExtArgs>
@@ -495,6 +635,10 @@ export type RackSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   code_rack?: boolean
   description?: boolean
+  posX?: boolean
+  posY?: boolean
+  width?: boolean
+  height?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["rack"]>
@@ -504,6 +648,10 @@ export type RackSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   code_rack?: boolean
   description?: boolean
+  posX?: boolean
+  posY?: boolean
+  width?: boolean
+  height?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["rack"]>
@@ -513,11 +661,15 @@ export type RackSelectScalar = {
   name?: boolean
   code_rack?: boolean
   description?: boolean
+  posX?: boolean
+  posY?: boolean
+  width?: boolean
+  height?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type RackOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "code_rack" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["rack"]>
+export type RackOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "code_rack" | "description" | "posX" | "posY" | "width" | "height" | "createdAt" | "updatedAt", ExtArgs["result"]["rack"]>
 export type RackInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   items?: boolean | Prisma.Rack$itemsArgs<ExtArgs>
   _count?: boolean | Prisma.RackCountOutputTypeDefaultArgs<ExtArgs>
@@ -535,6 +687,10 @@ export type $RackPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     name: string
     code_rack: string
     description: string | null
+    posX: number
+    posY: number
+    width: number
+    height: number
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["rack"]>
@@ -965,6 +1121,10 @@ export interface RackFieldRefs {
   readonly name: Prisma.FieldRef<"Rack", 'String'>
   readonly code_rack: Prisma.FieldRef<"Rack", 'String'>
   readonly description: Prisma.FieldRef<"Rack", 'String'>
+  readonly posX: Prisma.FieldRef<"Rack", 'Float'>
+  readonly posY: Prisma.FieldRef<"Rack", 'Float'>
+  readonly width: Prisma.FieldRef<"Rack", 'Float'>
+  readonly height: Prisma.FieldRef<"Rack", 'Float'>
   readonly createdAt: Prisma.FieldRef<"Rack", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Rack", 'DateTime'>
 }

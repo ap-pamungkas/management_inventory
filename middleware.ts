@@ -23,9 +23,7 @@ export async function middleware(request: NextRequest) {
       try {
         await jwtVerify(token, SECRET);
         return NextResponse.redirect(new URL("/admin", request.url));
-      } catch (e) {
-        // Token invalid, allow /login
-      }
+      } catch (e) {}
     }
     return NextResponse.next();
   }

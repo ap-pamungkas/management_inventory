@@ -8,7 +8,7 @@ export const useItems = () => {
   const [data, setData] = useState<Item[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState<number | "all">(10);
   const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
@@ -17,7 +17,7 @@ export const useItems = () => {
     try {
       const query = new URLSearchParams({
         page: page.toString(),
-        limit: limit === 1000000 ? "all" : limit.toString(),
+        limit: limit === "all" ? "all" : limit.toString(),
         search: search,
       });
 
@@ -58,6 +58,6 @@ export const useItems = () => {
     isLoading,
     refresh: fetchItems,
     totalPages:
-      limit === 1000000 ? 1 : Math.ceil(total / (limit === 0 ? total : limit)),
+      limit === "all" ? 1 : Math.ceil(total / (limit === 0 ? total : limit)),
   };
 };

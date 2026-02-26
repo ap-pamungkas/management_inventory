@@ -9,7 +9,7 @@ interface RackTableProps {
   data: Rack[];
   isLoading: boolean;
   page: number;
-  limit: number;
+  limit: number | "all";
   onEdit: (rack: Rack) => void;
   onDelete: (rack: Rack) => void;
 }
@@ -49,7 +49,7 @@ export default function RackTable({
         {data.map((rack, index) => (
           <tr key={rack.id} className="hover:bg-gray-50 transition-colors">
             <td className="px-4 py-3 text-sm">
-              {(page - 1) * limit + index + 1}
+              {limit === "all" ? index + 1 : (page - 1) * limit + index + 1}
             </td>
             <td className="px-4 py-3 text-sm font-medium">{rack.name}</td>
             <td className="px-4 py-3 text-sm">

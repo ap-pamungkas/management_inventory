@@ -49,14 +49,14 @@ const Header: React.FC<HeaderProps> = ({ onToggle, isOpen }) => {
 
   return (
     <header className="bg-white/80 backdrop-blur-md border-b border-neutral-200 sticky top-0 z-40 px-4 py-3">
-      <div className="max-w-7xl mx-auto flex  items-center justify-between">
+      <div className="mx-auto flex  items-center justify-between">
         {/* Left Side: Sidebar Toggle */}
-        <div className="flex cursor-pointer cursor-pointer  items-center gap-4 ">
+        <div className="flex cursor-pointer cursor-pointer   ">
           <button
-            className="p-2 hover:bg-neutral-100 rounded-lg  transition-colors lg:hidden"
+            className="p-2 hover:bg-neutral-100 rounded-lg cursor-pointer  transition-colors"
             onClick={onToggle}
           >
-            <Menu className="w-5 h-5 text-neutral-600" />
+            <Menu className="w-5 h-5 text-neutral-600 " />
           </button>
         </div>
 

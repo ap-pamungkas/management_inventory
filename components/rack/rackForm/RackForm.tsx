@@ -86,6 +86,60 @@ export default function RackForm({
         />
       </div>
 
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Posisi X (%)
+          </label>
+          <input
+            {...register("posX", { valueAsNumber: true })}
+            type="number"
+            min="0"
+            max="90"
+            className="block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm transition-all"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Posisi Y (%)
+          </label>
+          <input
+            {...register("posY", { valueAsNumber: true })}
+            type="number"
+            min="0"
+            max="90"
+            className="block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm transition-all"
+          />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Lebar (%)
+          </label>
+          <input
+            {...register("width", { valueAsNumber: true })}
+            type="number"
+            min="5"
+            max="50"
+            className="block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm transition-all"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Tinggi (%)
+          </label>
+          <input
+            {...register("height", { valueAsNumber: true })}
+            type="number"
+            min="5"
+            max="50"
+            className="block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm transition-all"
+          />
+        </div>
+      </div>
+
       <div className="flex justify-end gap-3 pt-4">
         {onCancel && (
           <Button

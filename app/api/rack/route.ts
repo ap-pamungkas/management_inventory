@@ -39,6 +39,7 @@ export async function GET(request: Request) {
     ]);
     return NextResponse.json({ data, total });
   } catch (error: unknown) {
+    console.error("GET /api/rack error:", error);
     return NextResponse.json({ error: "Failed to get racks" }, { status: 500 });
   }
 }
@@ -59,11 +60,14 @@ export async function POST(request: Request) {
       );
     }
 
-    const { name, description } = validation.data;
+    const { name, description, posX, posY, width, height } = validation.data;
 
     // 2. Generate automatic code_rack: R-1, R-2...
-    const count = await prisma.rack.count();
-    const generatedCode = `R-${count + 1}`;
+    const lastRack = await prisma.rack.findFirst({
+      orderBy: { id: "desc" },
+    });
+    const nextId = lastRack ? lastRack.id + 1 : 1;
+    const generatedCode = `R-${nextId}`;
 
     // 3. Simpan ke database
     const result = await prisma.rack.create({
@@ -71,6 +75,10 @@ export async function POST(request: Request) {
         name,
         code_rack: generatedCode,
         description,
+        posX,
+        posY,
+        width,
+        height,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -78,6 +86,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json(result, { status: 201 });
   } catch (error) {
+    console.error("POST /api/rack error:", error);
     return NextResponse.json(
       { error: "Gagal menyimpan data" },
       { status: 500 },
@@ -88,7 +97,7 @@ export async function POST(request: Request) {
 export async function PATCH(request: Request) {
   try {
     const body = await request.json();
-    const { id, name, description } = body;
+    const { id, name, description, posX, posY, width, height } = body;
 
     if (!id) {
       return NextResponse.json({ error: "ID rak diperlukan" }, { status: 400 });
@@ -99,12 +108,17 @@ export async function PATCH(request: Request) {
       data: {
         name,
         description,
+        posX,
+        posY,
+        width,
+        height,
         updatedAt: new Date(),
       },
     });
 
     return NextResponse.json(result);
   } catch (error) {
+    console.error("PATCH /api/rack error:", error);
     return NextResponse.json(
       { error: "Gagal memperbarui data rak" },
       { status: 500 },
@@ -126,6 +140,7 @@ export async function DELETE(request: Request) {
 
     return NextResponse.json(result);
   } catch (error) {
+    console.error("DELETE /api/rack error:", error);
     return NextResponse.json(
       { error: "Gagal menghapus data rak" },
       { status: 500 },

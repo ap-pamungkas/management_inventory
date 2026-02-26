@@ -484,14 +484,6 @@ export type ItemUncheckedUpdateManyWithoutRackNestedInput = {
   deleteMany?: Prisma.ItemScalarWhereInput | Prisma.ItemScalarWhereInput[]
 }
 
-export type FloatFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type ItemCreateWithoutRackInput = {
   name: string
   stock?: number
