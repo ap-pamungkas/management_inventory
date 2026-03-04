@@ -15,7 +15,7 @@ import { useItems } from "@/hooks/useItems";
 import type { Item } from "@/types/item";
 import toast from "react-hot-toast";
 import WarehouseMap from "@/components/rack/WarehouseMap";
-import { MapPin } from "lucide-react";
+import { MapPin, Edit, Trash2 } from "lucide-react";
 import { useRacks } from "@/hooks/useRacks";
 
 export default function ItemsPage() {
@@ -23,7 +23,6 @@ export default function ItemsPage() {
   const [selectedItem, setSelectedItem] = useState<Item | undefined>(undefined);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [isMapOpen, setIsMapOpen] = useState(false);
   const [highlightRackId, setHighlightRackId] = useState<number | undefined>(
     undefined,
   );
@@ -96,55 +95,80 @@ export default function ItemsPage() {
 
   return (
     <AdminLayout>
-      <Card
-        title="Daftar Barang"
-        additionalButton={
-          <Button
-            type="button"
-            label="Tambah Barang"
-            onClick={() => {
-              setSelectedItem(undefined);
-              setIsModalOpen(true);
-            }}
-            className="bg-blue-600 text-white font-medium shadow-md shadow-blue-100 px-5"
-          />
-        }
-      >
-        <div className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <SearchInput
-            value={search}
-            onChange={setSearch}
-            placeholder="Cari nama atau deskripsi barang..."
-            className="sm:max-w-xs"
-          />
-          <LimitSelector value={limit} onChange={setLimit} />
+      <div className="flex flex-col lg:flex-row gap-6 items-start">
+        <div className="flex-1 w-full">
+          <Card
+            title="Daftar Barang"
+            additionalButton={
+              <Button
+                type="button"
+                label="Tambah Barang"
+                onClick={() => {
+                  setSelectedItem(undefined);
+                  setIsModalOpen(true);
+                }}
+                className="bg-blue-600 text-white font-medium shadow-md shadow-blue-100 px-5"
+              />
+            }
+          >
+            <div className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <SearchInput
+                value={search}
+                onChange={setSearch}
+                placeholder="Cari nama atau deskripsi barang..."
+                className="sm:max-w-xs"
+              />
+              <LimitSelector value={limit} onChange={setLimit} />
+            </div>
+
+            <ItemTable
+              data={data}
+              isLoading={isLoading}
+              page={page}
+              limit={limit}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+              onLocate={(item) => {
+                if (item.rackId) {
+                  setHighlightRackId(item.rackId);
+                } else {
+                  toast.error("Barang ini belum memiliki lokasi rak.");
+                }
+              }}
+              onHover={(item) => {
+                if (item?.rackId) {
+                  setHighlightRackId(item.rackId);
+                } else {
+                  setHighlightRackId(undefined);
+                }
+              }}
+            />
+
+            <Pagination
+              currentPage={page}
+              totalPages={totalPages}
+              totalItems={total}
+              limit={limit}
+              onPageChange={setPage}
+            />
+          </Card>
         </div>
 
-        <ItemTable
-          data={data}
-          isLoading={isLoading}
-          page={page}
-          limit={limit}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-          onLocate={(item) => {
-            if (item.rackId) {
-              setHighlightRackId(item.rackId);
-              setIsMapOpen(true);
-            } else {
-              toast.error("Barang ini belum memiliki lokasi rak.");
-            }
-          }}
-        />
-
-        <Pagination
-          currentPage={page}
-          totalPages={totalPages}
-          totalItems={total}
-          limit={limit}
-          onPageChange={setPage}
-        />
-      </Card>
+        <div className="w-full lg:w-80 xl:w-96 lg:sticky lg:top-24">
+          <Card title="Inventory Map">
+            <div className="space-y-4">
+              <div className="h-[400px] rounded-xl overflow-hidden border border-slate-100 shadow-inner">
+                <WarehouseMap racks={racks} highlightRackId={highlightRackId} />
+              </div>
+              <p className="text-xs text-slate-400 text-center italic leading-relaxed">
+                Hover baris tabel untuk melihat lokasi rak.
+                <br />
+                Titik bercahaya menunjukkan posisi rak.
+              </p>
+            </div>
+          </Card>
+        </div>
+      </div>
 
       <FormModal
         isOpen={isModalOpen}
@@ -169,22 +193,6 @@ export default function ItemsPage() {
         message={`Apakah Anda yakin ingin menghapus barang "${selectedItem?.name}"? Tindakan ini tidak dapat dibatalkan.`}
         isLoading={isDeleting}
       />
-
-      <FormModal
-        isOpen={isMapOpen}
-        onClose={() => {
-          setIsMapOpen(false);
-          setHighlightRackId(undefined);
-        }}
-        title="Lokasi Barang di Warehouse"
-      >
-        <div className="space-y-4">
-          <WarehouseMap racks={racks} highlightRackId={highlightRackId} />
-          <p className="text-xs text-slate-500 text-center italic">
-            Titik bercahaya menunjukkan posisi rak penyimpanan barang ini.
-          </p>
-        </div>
-      </FormModal>
     </AdminLayout>
   );
 }

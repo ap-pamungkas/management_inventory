@@ -5,6 +5,7 @@ import type { Item } from "@/types/item";
 import Table from "@/components/ui/Table";
 import Button from "../ui/Button";
 import ItemTableSkeleton from "./ItemTableSkeleton";
+import { Edit, Trash2, MapPin } from "lucide-react";
 
 interface ItemTableProps {
   data: Item[];
@@ -14,6 +15,7 @@ interface ItemTableProps {
   onEdit: (item: Item) => void;
   onDelete: (item: Item) => void;
   onLocate: (item: Item) => void;
+  onHover?: (item: Item | null) => void;
 }
 
 export default function ItemTable({
@@ -24,6 +26,7 @@ export default function ItemTable({
   onEdit,
   onDelete,
   onLocate,
+  onHover,
 }: ItemTableProps) {
   if (isLoading) {
     return <ItemTableSkeleton />;
@@ -51,7 +54,12 @@ export default function ItemTable({
       </thead>
       <tbody className="divide-y divide-gray-200">
         {data.map((item, index) => (
-          <tr key={item.id} className="hover:bg-gray-50 transition-colors">
+          <tr
+            key={item.id}
+            className="hover:bg-blue-50/50 transition-colors group cursor-default"
+            onMouseEnter={() => onHover?.(item)}
+            onMouseLeave={() => onHover?.(null)}
+          >
             <td className="px-4 py-3 text-sm text-center">
               {limit === "all" ? index + 1 : (page - 1) * limit + index + 1}
             </td>
@@ -89,22 +97,28 @@ export default function ItemTable({
               </span>
             </td>
             <td className="px-4 py-3 text-sm">
-              <div className="flex justify-center gap-2">
-                <Button
-                  label="Map"
+              <div className="flex justify-center gap-1">
+                <button
                   onClick={() => onLocate(item)}
-                  className="bg-indigo-500 text-white hover:bg-indigo-600 border-none px-3 py-1.5 text-xs"
-                />
-                <Button
-                  label="Edit"
+                  className="p-2 text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"
+                  title="Lihat Lokasi"
+                >
+                  <MapPin size={18} />
+                </button>
+                <button
                   onClick={() => onEdit(item)}
-                  className="bg-slate-400 text-white hover:bg-slate-500 border-none px-3 py-1.5 text-xs"
-                />
-                <Button
-                  label="Hapus"
+                  className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
+                  title="Edit"
+                >
+                  <Edit size={18} />
+                </button>
+                <button
                   onClick={() => onDelete(item)}
-                  className="bg-red-500 text-white hover:bg-red-600 border-none px-3 py-1.5 text-xs"
-                />
+                  className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                  title="Hapus"
+                >
+                  <Trash2 size={18} />
+                </button>
               </div>
             </td>
           </tr>
