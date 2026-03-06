@@ -5,6 +5,7 @@ import { Menu, User, LogOut, Settings, ChevronDown, Bell } from "lucide-react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSession } from "@/hooks/useSession";
 
 interface HeaderProps {
   onToggle: () => void;
@@ -15,6 +16,7 @@ const Header: React.FC<HeaderProps> = ({ onToggle, isOpen }) => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const { user } = useSession();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -73,10 +75,10 @@ const Header: React.FC<HeaderProps> = ({ onToggle, isOpen }) => {
               </div>
               <div className="hidden cursor-pointer sm:block text-left">
                 <p className="text-xs font-bold text-slate-900 leading-none">
-                  Admin Stora
+                  {user?.name || "Loading..."}
                 </p>
                 <p className="text-[10px] text-slate-500 mt-1 font-medium">
-                  System Administrator
+                  {user?.role || "User"}
                 </p>
               </div>
               <ChevronDown
@@ -95,10 +97,10 @@ const Header: React.FC<HeaderProps> = ({ onToggle, isOpen }) => {
                 >
                   <div className="px-5 py-4 bg-slate-50/50 border-b border-slate-100">
                     <p className="text-sm font-black text-slate-900 tracking-tight">
-                      STORA ADMIN
+                      {user?.name?.toUpperCase() || "STORA USER"}
                     </p>
                     <p className="text-xs text-slate-500 truncate mt-1">
-                      admin@stora.io
+                      {user?.username || "loading..."}
                     </p>
                   </div>
 

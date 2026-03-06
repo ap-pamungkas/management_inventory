@@ -21,9 +21,30 @@ export async function proxy(request: NextRequest) {
     // If user is already logged in and tries to access /login, redirect to /admin
     if (pathname === "/login" && token) {
       try {
-        await jwtVerify(token, SECRET);
+        const { payload } = await jwtVerify(token, SECRET);
+        const role = payload.role as string;
+
+        // If it's a guest, check if the window is still valid before auto-redirecting to /admin
+        if (role === "GUEST") {
+          const now = new Date();
+          const from = payload.accessibleFrom
+            ? new Date(payload.accessibleFrom as string)
+            : null;
+          const until = payload.accessibleUntil
+            ? new Date(payload.accessibleUntil as string)
+            : null;
+
+          if ((from && now < from) || (until && now > until)) {
+            // Invalid window, let them see the login page
+            return NextResponse.next();
+          }
+        }
+
         return NextResponse.redirect(new URL("/admin", request.url));
-      } catch (e) {}
+      } catch (e) {
+        // Token invalid, continue to login
+        return NextResponse.next();
+      }
     }
     return NextResponse.next();
   }
@@ -41,7 +62,7 @@ export async function proxy(request: NextRequest) {
       const { payload } = await jwtVerify(token, SECRET);
       const role = payload.role as string;
 
-      // Guest access control
+      // Guest access window control
       if (role === "GUEST") {
         const now = new Date();
         const from = payload.accessibleFrom
@@ -58,19 +79,20 @@ export async function proxy(request: NextRequest) {
               { status: 403 },
             );
           }
+          // Redirect back to login with a clear error
           return NextResponse.redirect(
             new URL("/login?error=access_window", request.url),
           );
         }
       }
 
-      // Admin access control (Basic)
-      if (
-        pathname.startsWith("/admin") &&
-        role !== "ADMIN" &&
-        role !== "AUTHORIZED"
-      ) {
-        return NextResponse.redirect(new URL("/", request.url));
+      // Role-based access for /admin
+      // Requirements specify: ADMIN, AUTHORIZED, COOPERATED, GUEST
+      if (pathname.startsWith("/admin")) {
+        const allowedRoles = ["ADMIN", "AUTHORIZED", "COOPERATED", "GUEST"];
+        if (!allowedRoles.includes(role)) {
+          return NextResponse.redirect(new URL("/", request.url));
+        }
       }
 
       return NextResponse.next();

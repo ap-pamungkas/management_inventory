@@ -2,6 +2,7 @@
 
 import { Box, Boxes, House, Users, X } from "lucide-react";
 import MenuItem from "@/components/ui/MenuItem";
+import { useSession } from "@/hooks/useSession";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -9,6 +10,8 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
+  const { user } = useSession();
+  const isAdmin = user?.role === "ADMIN";
   return (
     <aside
       className={`sidebar fixed inset-y-0 left-0 w-[280px] z-50 transform transition-transform duration-300 ease-in-out ${
@@ -53,11 +56,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           label="Manajemen Rak"
           href="/admin/rack"
         />
-        <MenuItem
-          icon={<Users className="w-5 h-5" />}
-          label="Manajemen User"
-          href="/admin/users"
-        />
+        {isAdmin && (
+          <MenuItem
+            icon={<Users className="w-5 h-5" />}
+            label="Manajemen User"
+            href="/admin/users"
+          />
+        )}
       </nav>
 
       <div className="absolute bottom-8 left-0 w-full px-6">
