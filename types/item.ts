@@ -6,8 +6,10 @@ export interface Item {
   stock: number;
   purchase_price: number;
   rackId: number;
+  row?: number | null;
+  col?: number | null;
   description?: string | null;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: Date | string;
+  updatedAt: Date | string;
   rack?: Rack;
 }

@@ -38,7 +38,41 @@ export async function proxy(request: NextRequest) {
     }
 
     try {
-      await jwtVerify(token, SECRET);
+      const { payload } = await jwtVerify(token, SECRET);
+      const role = payload.role as string;
+
+      // Guest access control
+      if (role === "GUEST") {
+        const now = new Date();
+        const from = payload.accessibleFrom
+          ? new Date(payload.accessibleFrom as string)
+          : null;
+        const until = payload.accessibleUntil
+          ? new Date(payload.accessibleUntil as string)
+          : null;
+
+        if ((from && now < from) || (until && now > until)) {
+          if (pathname.startsWith("/api")) {
+            return NextResponse.json(
+              { message: "Access expired or not yet available" },
+              { status: 403 },
+            );
+          }
+          return NextResponse.redirect(
+            new URL("/login?error=access_window", request.url),
+          );
+        }
+      }
+
+      // Admin access control (Basic)
+      if (
+        pathname.startsWith("/admin") &&
+        role !== "ADMIN" &&
+        role !== "AUTHORIZED"
+      ) {
+        return NextResponse.redirect(new URL("/", request.url));
+      }
+
       return NextResponse.next();
     } catch (error) {
       if (pathname.startsWith("/api")) {

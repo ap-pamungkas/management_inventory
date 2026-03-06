@@ -38,6 +38,9 @@ export async function POST(request: Request) {
       userId: user.id,
       username: user.username,
       name: user.name,
+      role: user.role,
+      accessibleFrom: user.accessibleFrom,
+      accessibleUntil: user.accessibleUntil,
     });
 
     const response = NextResponse.json(

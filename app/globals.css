@@ -1,84 +1,88 @@
 @import "tailwindcss";
+
 :root {
-  --primary-color: #206de9;
+  --primary-color: #4f46e5; /* Indigo 600 */
+  --primary-hover: #4338ca; /* Indigo 700 */
+  --sidebar-bg: #0f172a; /* Slate 900 */
+  --content-bg: #f8fafc; /* Slate 50 */
 }
+
 body {
-  background-color: #ebf4f6;
+  background-color: var(--content-bg);
+  color: #1e293b;
   overflow-x: hidden;
 }
+
+/* Custom Sidebar Styles */
 .sidebar {
-  height: 100%;
+  height: 100vh;
   position: fixed;
-  z-index: 1;
+  z-index: 50;
   top: 0;
   left: 0;
-  background-color: #061e29;
+  background-color: var(--sidebar-bg);
   overflow-x: hidden;
-  transition: 0.5s;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar .nav {
   text-decoration: none;
-  font-size: 1.1rem;
-  color: rgb(254, 254, 254);
-  transition: 0.3s;
-  @apply px-2 py-2 mb-4 mx-2;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #94a3b8;
+  transition: all 0.2s;
+  @apply px-4 py-3 mb-1 mx-3 flex items-center gap-3 rounded-xl;
 }
 
 .sidebar .nav:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: white;
+}
+
+.sidebar .nav.active {
   background-color: var(--primary-color);
-  color: rgb(254, 254, 254);
-  @apply rounded shadow;
-}
-
-.sidebar .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
-}
-
-.openbtn {
-  font-size: 20px;
-  cursor: pointer;
-
-  color: rgb(6, 6, 6);
-  padding: 10px 15px;
-  border: none;
-}
-
-.openbtn:hover {
-  color: var(--primary-color);
-}
-
-.active {
-  background-color: var(--primary-color);
-  color: rgb(254, 254, 254);
-  @apply rounded shadow;
+  color: white;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
 }
 
 .main {
-  transition: margin-left 0.5s;
+  transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 100vh;
 }
 
-td,
-th {
-  border: 1px solid #ffffff;
-  text-align: left;
-  padding: 8px;
+/* Responsive Table Styles */
+.table-responsive {
+  @apply block w-full overflow-x-auto scrolling-touch;
 }
 
-tr:nth-child(even) {
-  background-color: #ffffff;
+.table {
+  @apply w-full border-collapse bg-white rounded-2xl overflow-hidden;
 }
 
-/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-@media screen and (max-height: 450px) {
-  .sidebar {
-    padding-top: 15px;
-  }
-  .sidebar a {
-    font-size: 18px;
-  }
+/* Scrollbar refinement */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Glassmorphism helpers */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }

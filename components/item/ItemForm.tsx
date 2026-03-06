@@ -127,6 +127,45 @@ export default function ItemForm({
           )}
         </div>
 
+        {/* Row & Column (Positioning) */}
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-1.5">
+            <label className="text-sm font-semibold text-gray-700 font-mono flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-blue-500" />
+              Row (Baris)
+            </label>
+            <input
+              {...register("row")}
+              type="number"
+              className="block w-full px-4 py-2 bg-blue-50/50 border border-blue-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:text-gray-400"
+              placeholder="0"
+            />
+            {errors.row && (
+              <p className="text-xs text-red-500 font-medium">
+                {errors.row.message}
+              </p>
+            )}
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-semibold text-gray-700 font-mono flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-indigo-500" />
+              Column (Kolom)
+            </label>
+            <input
+              {...register("col")}
+              type="number"
+              className="block w-full px-4 py-2 bg-indigo-50/50 border border-indigo-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all placeholder:text-gray-400"
+              placeholder="0"
+            />
+            {errors.col && (
+              <p className="text-xs text-red-500 font-medium">
+                {errors.col.message}
+              </p>
+            )}
+          </div>
+        </div>
+
         {/* Deskripsi */}
         <div className="space-y-1.5">
           <label className="text-sm font-semibold text-gray-700">

@@ -99,7 +99,7 @@ export default function RackPage() {
               label="Visualisasi Peta"
               icon={<Move size={18} />}
               onClick={() => setIsMapOpen(true)}
-              className="bg-slate-700 text-white font-medium shadow-md shadow-slate-100 px-5"
+              className="bg-slate-800 text-white font-medium shadow-md shadow-slate-200 px-5 hover:bg-black transition-all"
             />
             <Button
               type="button"
@@ -108,7 +108,7 @@ export default function RackPage() {
                 setSelectedRack(undefined);
                 setIsModalOpen(true);
               }}
-              className="bg-blue-600 text-white font-medium shadow-md shadow-blue-100 px-5"
+              className="bg-indigo-600 text-white font-medium shadow-md shadow-indigo-100 px-5 hover:bg-indigo-700 transition-all"
             />
           </div>
         }

@@ -68,17 +68,19 @@ const Header: React.FC<HeaderProps> = ({ onToggle, isOpen }) => {
               onClick={() => setIsProfileOpen(!isProfileOpen)}
               className="flex items-center gap-2 p-1.5 pr-3 hover:bg-neutral-100 rounded-full transition-all group"
             >
-              <div className="w-8 cursor-pointer h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white shadow-sm group-hover:shadow-md transition-shadow">
+              <div className="w-8 cursor-pointer h-8 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-700 flex items-center justify-center text-white shadow-lg shadow-indigo-100 group-hover:shadow-indigo-200 transition-all">
                 <User className="w-4 h-4" />
               </div>
               <div className="hidden cursor-pointer sm:block text-left">
-                <p className="text-xs font-semibold text-neutral-900 leading-none">
-                  Admin User
+                <p className="text-xs font-bold text-slate-900 leading-none">
+                  Admin Stora
                 </p>
-                <p className="text-[10px] text-neutral-500 mt-0.5">Online</p>
+                <p className="text-[10px] text-slate-500 mt-1 font-medium">
+                  System Administrator
+                </p>
               </div>
               <ChevronDown
-                className={`w-4 h-4 cursor-pointer text-neutral-400 transition-transform duration-200 ${isProfileOpen ? "rotate-180" : ""}`}
+                className={`w-4 h-4 cursor-pointer text-slate-400 transition-transform duration-300 ${isProfileOpen ? "rotate-180" : ""}`}
               />
             </button>
 
@@ -89,14 +91,14 @@ const Header: React.FC<HeaderProps> = ({ onToggle, isOpen }) => {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 10, scale: 0.95 }}
                   transition={{ duration: 0.2 }}
-                  className="absolute  right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-neutral-100 py-2 overflow-hidden text-left"
+                  className="absolute right-0 mt-3 w-64 bg-white rounded-3xl shadow-2xl shadow-slate-200/50 border border-slate-100 py-2 overflow-hidden text-left"
                 >
-                  <div className="px-4 py-3 border-b border-neutral-50">
-                    <p className="text-sm font-bold text-neutral-900">
-                      Administrator
+                  <div className="px-5 py-4 bg-slate-50/50 border-b border-slate-100">
+                    <p className="text-sm font-black text-slate-900 tracking-tight">
+                      STORA ADMIN
                     </p>
-                    <p className="text-xs text-neutral-500 truncate mt-0.5">
-                      admin@inventory.com
+                    <p className="text-xs text-slate-500 truncate mt-1">
+                      admin@stora.io
                     </p>
                   </div>
 

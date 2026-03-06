@@ -24,6 +24,9 @@ export default function ItemTableSkeleton() {
             <th className="px-6 py-4 bg-gray-50/50 border-b border-gray-100 font-bold text-gray-700">
               Rak
             </th>
+            <th className="px-6 py-4 bg-gray-50/50 border-b border-gray-100 font-bold text-gray-700">
+              Posisi
+            </th>
             <th className="px-6 py-4 bg-gray-50/50 border-b border-gray-100 font-bold text-gray-700 text-center">
               Aksi
             </th>
@@ -46,6 +49,9 @@ export default function ItemTableSkeleton() {
               </td>
               <td className="px-6 py-4 border-b border-white bg-white">
                 <Skeleton className="h-4 w-20" />
+              </td>
+              <td className="px-6 py-4 border-b border-white bg-white">
+                <Skeleton className="h-4 w-16" />
               </td>
               <td className="px-6 py-4 border-b border-white bg-white">
                 <div className="flex justify-center gap-2">

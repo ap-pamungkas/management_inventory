@@ -140,6 +140,42 @@ export default function RackForm({
         </div>
       </div>
 
+      <div className="p-4 bg-blue-50 rounded-xl border border-blue-100 flex flex-col gap-3">
+        <h3 className="text-xs font-bold text-blue-800 uppercase tracking-wider flex items-center gap-2">
+          <span>Konfigurasi Grid Laci/Slot</span>
+          <div className="h-px flex-grow bg-blue-200" />
+        </h3>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-[11px] font-bold text-blue-700 mb-1 uppercase">
+              Jumlah Baris
+            </label>
+            <input
+              {...register("layoutRows", { valueAsNumber: true })}
+              type="number"
+              min="1"
+              max="20"
+              className="block w-full rounded-lg border border-blue-200 bg-white px-4 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm transition-all"
+            />
+          </div>
+          <div>
+            <label className="block text-[11px] font-bold text-blue-700 mb-1 uppercase">
+              Jumlah Kolom
+            </label>
+            <input
+              {...register("layoutCols", { valueAsNumber: true })}
+              type="number"
+              min="1"
+              max="20"
+              className="block w-full rounded-lg border border-blue-200 bg-white px-4 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm transition-all"
+            />
+          </div>
+        </div>
+        <p className="text-[10px] text-blue-600 italic">
+          * Konfigurasi ini menentukan detail mapping posisi item di dalam rak.
+        </p>
+      </div>
+
       <div className="flex justify-end gap-3 pt-4">
         {onCancel && (
           <Button

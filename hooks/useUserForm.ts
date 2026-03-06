@@ -2,57 +2,59 @@
 
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CreateRackSchema, CreateRackType } from "@/lib/zod-schemas/rack";
+import { CreateUserSchema, CreateUserType } from "@/lib/zod-schemas/user";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
-interface UseRackFormProps {
+interface UseUserFormProps {
   initialData?: any;
   onSuccess?: () => void;
 }
 
-export const useRackForm = ({
+export const useUserForm = ({
   initialData,
   onSuccess,
-}: UseRackFormProps = {}) => {
+}: UseUserFormProps = {}) => {
   const router = useRouter();
   const isEditing = !!initialData?.id;
 
-  const form = useForm<CreateRackType>({
-    resolver: zodResolver(CreateRackSchema) as any,
+  const form = useForm<CreateUserType>({
+    resolver: zodResolver(CreateUserSchema) as any,
     defaultValues: {
       name: initialData?.name ?? "",
-      code_rack: initialData?.code_rack ?? "",
-      description: initialData?.description ?? "",
-      posX: initialData?.posX ?? 0,
-      posY: initialData?.posY ?? 0,
-      width: initialData?.width ?? 10,
-      height: initialData?.height ?? 10,
-      layoutRows: initialData?.layoutRows ?? 1,
-      layoutCols: initialData?.layoutCols ?? 1,
+      username: initialData?.username ?? "",
+      password: "",
+      role: initialData?.role ?? "GUEST",
+      accessibleFrom: initialData?.accessibleFrom
+        ? new Date(initialData.accessibleFrom).toISOString().slice(0, 16)
+        : "",
+      accessibleUntil: initialData?.accessibleUntil
+        ? new Date(initialData.accessibleUntil).toISOString().slice(0, 16)
+        : "",
+      cctvStamp: initialData?.cctvStamp ?? "",
     },
   });
 
-  const onSubmit: SubmitHandler<CreateRackType> = async (data) => {
+  const onSubmit: SubmitHandler<CreateUserType> = async (data) => {
     const toastId = toast.loading(
-      isEditing ? "Memperbarui data rak..." : "Menyimpan data rak...",
+      isEditing ? "Memperbarui data user..." : "Menyimpan data user...",
     );
     try {
-      const response = await fetch("/api/rack", {
-        method: isEditing ? "PATCH" : "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        isEditing ? `/api/user/${initialData.id}` : "/api/user",
+        {
+          method: isEditing ? "PATCH" : "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
         },
-        body: JSON.stringify(
-          isEditing ? { ...data, id: initialData.id } : data,
-        ),
-      });
+      );
 
       const result = await response.json();
 
       if (!response.ok) {
         if (result.errors) {
-          // Handle validation errors from Zod
           Object.keys(result.errors).forEach((key) => {
             form.setError(key as any, {
               type: "manual",
@@ -61,11 +63,11 @@ export const useRackForm = ({
           });
           throw new Error("Terdapat kesalahan validasi");
         }
-        throw new Error(result.error || "Gagal menyimpan data rak");
+        throw new Error(result.error || "Gagal menyimpan data user");
       }
 
       toast.success(
-        isEditing ? "Rak berhasil diperbarui!" : "Rak berhasil ditambahkan!",
+        isEditing ? "User berhasil diperbarui!" : "User berhasil ditambahkan!",
         { id: toastId },
       );
       if (!isEditing) form.reset();

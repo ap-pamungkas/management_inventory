@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Rack } from "@/types/rack";
+import RackSubMap from "./RackSubMap";
 
 interface WarehouseMapProps {
   racks: Rack[];
@@ -16,6 +17,8 @@ const WarehouseMap: React.FC<WarehouseMapProps> = ({
   onRackClick,
   interactive = false,
 }) => {
+  const [hoveredRack, setHoveredRack] = React.useState<Rack | null>(null);
+
   return (
     <div className="relative w-full aspect-video bg-slate-900 rounded-xl overflow-hidden border border-slate-700 shadow-2xl group">
       {/* Floor Pattern */}
@@ -39,14 +42,17 @@ const WarehouseMap: React.FC<WarehouseMapProps> = ({
       <div className="absolute inset-8">
         {racks.map((rack) => {
           const isHighlighted = highlightRackId === rack.id;
+          const isHovered = hoveredRack?.id === rack.id;
 
           return (
             <div
               key={rack.id}
               onClick={() => onRackClick?.(rack)}
+              onMouseEnter={() => setHoveredRack(rack)}
+              onMouseLeave={() => setHoveredRack(null)}
               className={`absolute transition-all duration-500 cursor-pointer flex flex-col items-center justify-center rounded-lg border-2 group/rack
                 ${
-                  isHighlighted
+                  isHighlighted || isHovered
                     ? "bg-indigo-600 border-white z-10 scale-105 shadow-[0_20px_50px_rgba(79,70,229,0.5)]"
                     : "bg-gradient-to-br from-slate-700 to-slate-800 border-slate-600 hover:border-indigo-400 hover:shadow-lg hover:shadow-indigo-500/20"
                 }
@@ -65,6 +71,14 @@ const WarehouseMap: React.FC<WarehouseMapProps> = ({
               >
                 {rack.code_rack}
               </div>
+
+              {/* Sub-map Tooltip on Hover */}
+              {isHovered && (
+                <div className="absolute bottom-full mb-4 left-1/2 -translate-x-1/2 w-48 pointer-events-none z-50">
+                  <RackSubMap rack={rack} />
+                  <div className="w-3 h-3 bg-slate-800 border-r border-b border-slate-700 rotate-45 mx-auto -mt-1.5" />
+                </div>
+              )}
 
               {/* Box Top Detail (simulated depth) */}
               <div className="absolute -top-1 left-2 right-2 h-[2px] bg-white opacity-20 rounded-full" />

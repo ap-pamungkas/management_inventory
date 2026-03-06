@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Manajemen Inventory",
-  description: "Aplikasi manajemen inventory ",
+  title: "Stora - Smart Inventory Management",
+  description: "Advanced warehouse and asset management solution",
 };
 
 export default function RootLayout({

@@ -26,6 +26,9 @@ export async function GET(request: Request) {
             { description: { contains: search, mode: "insensitive" } },
           ],
         },
+        include: {
+          items: true,
+        },
       }),
       prisma.rack.count({
         where: {
@@ -60,7 +63,16 @@ export async function POST(request: Request) {
       );
     }
 
-    const { name, description, posX, posY, width, height } = validation.data;
+    const {
+      name,
+      description,
+      posX,
+      posY,
+      width,
+      height,
+      layoutRows,
+      layoutCols,
+    } = validation.data;
 
     // 2. Generate automatic code_rack: R-1, R-2...
     const lastRack = await prisma.rack.findFirst({
@@ -79,6 +91,8 @@ export async function POST(request: Request) {
         posY,
         width,
         height,
+        layoutRows,
+        layoutCols,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -97,7 +111,17 @@ export async function POST(request: Request) {
 export async function PATCH(request: Request) {
   try {
     const body = await request.json();
-    const { id, name, description, posX, posY, width, height } = body;
+    const {
+      id,
+      name,
+      description,
+      posX,
+      posY,
+      width,
+      height,
+      layoutRows,
+      layoutCols,
+    } = body;
 
     if (!id) {
       return NextResponse.json({ error: "ID rak diperlukan" }, { status: 400 });
@@ -112,6 +136,8 @@ export async function PATCH(request: Request) {
         posY,
         width,
         height,
+        layoutRows,
+        layoutCols,
         updatedAt: new Date(),
       },
     });

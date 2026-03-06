@@ -672,6 +672,10 @@ export const UserScalarFieldEnum = {
   name: 'name',
   username: 'username',
   password: 'password',
+  role: 'role',
+  accessibleFrom: 'accessibleFrom',
+  accessibleUntil: 'accessibleUntil',
+  cctvStamp: 'cctvStamp',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -688,6 +692,8 @@ export const RackScalarFieldEnum = {
   posY: 'posY',
   width: 'width',
   height: 'height',
+  layoutRows: 'layoutRows',
+  layoutCols: 'layoutCols',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -701,6 +707,8 @@ export const ItemScalarFieldEnum = {
   stock: 'stock',
   purchase_price: 'purchase_price',
   rackId: 'rackId',
+  row: 'row',
+  col: 'col',
   description: 'description',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -764,6 +772,20 @@ export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 
  * Reference to a field of type 'String[]'
  */
 export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Role'
+ */
+export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role'>
+    
+
+
+/**
+ * Reference to a field of type 'Role[]'
+ */
+export type ListEnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role[]'>
     
 
 

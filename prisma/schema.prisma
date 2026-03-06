@@ -13,13 +13,24 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Role {
+  ADMIN
+  AUTHORIZED
+  COOPERATED
+  GUEST
+}
+
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String
-  username  String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id              Int       @id @default(autoincrement())
+  name            String
+  username        String    @unique
+  password        String
+  role            Role      @default(GUEST)
+  accessibleFrom  DateTime?
+  accessibleUntil DateTime?
+  cctvStamp       String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 }
 
 model Rack {
@@ -32,6 +43,8 @@ model Rack {
   posY        Float    @default(0)
   width       Float    @default(10)
   height      Float    @default(10)
+  layoutRows  Int      @default(1)
+  layoutCols  Int      @default(1)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -42,6 +55,8 @@ model Item {
   stock          Int      @default(0)
   purchase_price Float
   rackId         Int
+  row            Int?
+  col            Int?
   description    String?
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt

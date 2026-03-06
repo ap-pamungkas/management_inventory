@@ -12,26 +12,28 @@ export default function RecentActivity({ items }: RecentActivityProps) {
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
       <div className="p-5 border-b border-gray-100 flex items-center justify-between">
-        <h3 className="font-bold text-gray-900">Aktivitas Terbaru</h3>
+        <h3 className="font-black text-slate-900 tracking-tight">
+          Recent Activity
+        </h3>
         <Link
           href="/admin/items"
-          className="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-0.5"
+          className="text-[10px] font-black uppercase tracking-widest text-indigo-600 hover:text-indigo-700 flex items-center gap-1"
         >
-          Lihat Semua <ChevronRight size={14} />
+          View All <ChevronRight size={14} />
         </Link>
       </div>
-      <div className="divide-y divide-gray-50">
+      <div className="divide-y divide-slate-50">
         {items.length === 0 ? (
-          <div className="p-8 text-center text-gray-500 text-sm">
-            Belum ada aktivitas terbaru.
+          <div className="p-12 text-center text-slate-400 font-medium text-sm">
+            No recent activity detected.
           </div>
         ) : (
           items.map((item) => (
             <div
               key={item.id}
-              className="p-4 flex items-center gap-4 hover:bg-gray-50 transition-colors"
+              className="p-5 flex items-center gap-5 hover:bg-slate-50/50 transition-colors group"
             >
-              <div className="p-2 bg-blue-50 text-blue-600 rounded-lg">
+              <div className="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300">
                 <Package size={18} />
               </div>
               <div className="flex-1 min-w-0">

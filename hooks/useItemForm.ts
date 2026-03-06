@@ -27,6 +27,8 @@ export const useItemForm = ({
       stock: initialData?.stock || 0,
       purchase_price: initialData?.purchase_price || 0,
       rackId: initialData?.rackId || 0,
+      row: initialData?.row ?? null,
+      col: initialData?.col ?? null,
       description: initialData?.description || "",
     },
   });

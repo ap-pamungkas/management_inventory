@@ -31,6 +31,8 @@ export type ItemAvgAggregateOutputType = {
   stock: number | null
   purchase_price: number | null
   rackId: number | null
+  row: number | null
+  col: number | null
 }
 
 export type ItemSumAggregateOutputType = {
@@ -38,6 +40,8 @@ export type ItemSumAggregateOutputType = {
   stock: number | null
   purchase_price: number | null
   rackId: number | null
+  row: number | null
+  col: number | null
 }
 
 export type ItemMinAggregateOutputType = {
@@ -46,6 +50,8 @@ export type ItemMinAggregateOutputType = {
   stock: number | null
   purchase_price: number | null
   rackId: number | null
+  row: number | null
+  col: number | null
   description: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -57,6 +63,8 @@ export type ItemMaxAggregateOutputType = {
   stock: number | null
   purchase_price: number | null
   rackId: number | null
+  row: number | null
+  col: number | null
   description: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -68,6 +76,8 @@ export type ItemCountAggregateOutputType = {
   stock: number
   purchase_price: number
   rackId: number
+  row: number
+  col: number
   description: number
   createdAt: number
   updatedAt: number
@@ -80,6 +90,8 @@ export type ItemAvgAggregateInputType = {
   stock?: true
   purchase_price?: true
   rackId?: true
+  row?: true
+  col?: true
 }
 
 export type ItemSumAggregateInputType = {
@@ -87,6 +99,8 @@ export type ItemSumAggregateInputType = {
   stock?: true
   purchase_price?: true
   rackId?: true
+  row?: true
+  col?: true
 }
 
 export type ItemMinAggregateInputType = {
@@ -95,6 +109,8 @@ export type ItemMinAggregateInputType = {
   stock?: true
   purchase_price?: true
   rackId?: true
+  row?: true
+  col?: true
   description?: true
   createdAt?: true
   updatedAt?: true
@@ -106,6 +122,8 @@ export type ItemMaxAggregateInputType = {
   stock?: true
   purchase_price?: true
   rackId?: true
+  row?: true
+  col?: true
   description?: true
   createdAt?: true
   updatedAt?: true
@@ -117,6 +135,8 @@ export type ItemCountAggregateInputType = {
   stock?: true
   purchase_price?: true
   rackId?: true
+  row?: true
+  col?: true
   description?: true
   createdAt?: true
   updatedAt?: true
@@ -215,6 +235,8 @@ export type ItemGroupByOutputType = {
   stock: number
   purchase_price: number
   rackId: number
+  row: number | null
+  col: number | null
   description: string | null
   createdAt: Date
   updatedAt: Date
@@ -249,6 +271,8 @@ export type ItemWhereInput = {
   stock?: Prisma.IntFilter<"Item"> | number
   purchase_price?: Prisma.FloatFilter<"Item"> | number
   rackId?: Prisma.IntFilter<"Item"> | number
+  row?: Prisma.IntNullableFilter<"Item"> | number | null
+  col?: Prisma.IntNullableFilter<"Item"> | number | null
   description?: Prisma.StringNullableFilter<"Item"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Item"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Item"> | Date | string
@@ -261,6 +285,8 @@ export type ItemOrderByWithRelationInput = {
   stock?: Prisma.SortOrder
   purchase_price?: Prisma.SortOrder
   rackId?: Prisma.SortOrder
+  row?: Prisma.SortOrderInput | Prisma.SortOrder
+  col?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -276,6 +302,8 @@ export type ItemWhereUniqueInput = Prisma.AtLeast<{
   stock?: Prisma.IntFilter<"Item"> | number
   purchase_price?: Prisma.FloatFilter<"Item"> | number
   rackId?: Prisma.IntFilter<"Item"> | number
+  row?: Prisma.IntNullableFilter<"Item"> | number | null
+  col?: Prisma.IntNullableFilter<"Item"> | number | null
   description?: Prisma.StringNullableFilter<"Item"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Item"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Item"> | Date | string
@@ -288,6 +316,8 @@ export type ItemOrderByWithAggregationInput = {
   stock?: Prisma.SortOrder
   purchase_price?: Prisma.SortOrder
   rackId?: Prisma.SortOrder
+  row?: Prisma.SortOrderInput | Prisma.SortOrder
+  col?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -307,6 +337,8 @@ export type ItemScalarWhereWithAggregatesInput = {
   stock?: Prisma.IntWithAggregatesFilter<"Item"> | number
   purchase_price?: Prisma.FloatWithAggregatesFilter<"Item"> | number
   rackId?: Prisma.IntWithAggregatesFilter<"Item"> | number
+  row?: Prisma.IntNullableWithAggregatesFilter<"Item"> | number | null
+  col?: Prisma.IntNullableWithAggregatesFilter<"Item"> | number | null
   description?: Prisma.StringNullableWithAggregatesFilter<"Item"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Item"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Item"> | Date | string
@@ -316,6 +348,8 @@ export type ItemCreateInput = {
   name: string
   stock?: number
   purchase_price: number
+  row?: number | null
+  col?: number | null
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -328,6 +362,8 @@ export type ItemUncheckedCreateInput = {
   stock?: number
   purchase_price: number
   rackId: number
+  row?: number | null
+  col?: number | null
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -337,6 +373,8 @@ export type ItemUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   purchase_price?: Prisma.FloatFieldUpdateOperationsInput | number
+  row?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  col?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -349,6 +387,8 @@ export type ItemUncheckedUpdateInput = {
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   purchase_price?: Prisma.FloatFieldUpdateOperationsInput | number
   rackId?: Prisma.IntFieldUpdateOperationsInput | number
+  row?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  col?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -360,6 +400,8 @@ export type ItemCreateManyInput = {
   stock?: number
   purchase_price: number
   rackId: number
+  row?: number | null
+  col?: number | null
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -369,6 +411,8 @@ export type ItemUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   purchase_price?: Prisma.FloatFieldUpdateOperationsInput | number
+  row?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  col?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -380,6 +424,8 @@ export type ItemUncheckedUpdateManyInput = {
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   purchase_price?: Prisma.FloatFieldUpdateOperationsInput | number
   rackId?: Prisma.IntFieldUpdateOperationsInput | number
+  row?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  col?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -401,6 +447,8 @@ export type ItemCountOrderByAggregateInput = {
   stock?: Prisma.SortOrder
   purchase_price?: Prisma.SortOrder
   rackId?: Prisma.SortOrder
+  row?: Prisma.SortOrder
+  col?: Prisma.SortOrder
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -411,6 +459,8 @@ export type ItemAvgOrderByAggregateInput = {
   stock?: Prisma.SortOrder
   purchase_price?: Prisma.SortOrder
   rackId?: Prisma.SortOrder
+  row?: Prisma.SortOrder
+  col?: Prisma.SortOrder
 }
 
 export type ItemMaxOrderByAggregateInput = {
@@ -419,6 +469,8 @@ export type ItemMaxOrderByAggregateInput = {
   stock?: Prisma.SortOrder
   purchase_price?: Prisma.SortOrder
   rackId?: Prisma.SortOrder
+  row?: Prisma.SortOrder
+  col?: Prisma.SortOrder
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -430,6 +482,8 @@ export type ItemMinOrderByAggregateInput = {
   stock?: Prisma.SortOrder
   purchase_price?: Prisma.SortOrder
   rackId?: Prisma.SortOrder
+  row?: Prisma.SortOrder
+  col?: Prisma.SortOrder
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -440,6 +494,8 @@ export type ItemSumOrderByAggregateInput = {
   stock?: Prisma.SortOrder
   purchase_price?: Prisma.SortOrder
   rackId?: Prisma.SortOrder
+  row?: Prisma.SortOrder
+  col?: Prisma.SortOrder
 }
 
 export type ItemCreateNestedManyWithoutRackInput = {
@@ -484,10 +540,20 @@ export type ItemUncheckedUpdateManyWithoutRackNestedInput = {
   deleteMany?: Prisma.ItemScalarWhereInput | Prisma.ItemScalarWhereInput[]
 }
 
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type ItemCreateWithoutRackInput = {
   name: string
   stock?: number
   purchase_price: number
+  row?: number | null
+  col?: number | null
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -498,6 +564,8 @@ export type ItemUncheckedCreateWithoutRackInput = {
   name: string
   stock?: number
   purchase_price: number
+  row?: number | null
+  col?: number | null
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -538,6 +606,8 @@ export type ItemScalarWhereInput = {
   stock?: Prisma.IntFilter<"Item"> | number
   purchase_price?: Prisma.FloatFilter<"Item"> | number
   rackId?: Prisma.IntFilter<"Item"> | number
+  row?: Prisma.IntNullableFilter<"Item"> | number | null
+  col?: Prisma.IntNullableFilter<"Item"> | number | null
   description?: Prisma.StringNullableFilter<"Item"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Item"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Item"> | Date | string
@@ -548,6 +618,8 @@ export type ItemCreateManyRackInput = {
   name: string
   stock?: number
   purchase_price: number
+  row?: number | null
+  col?: number | null
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -557,6 +629,8 @@ export type ItemUpdateWithoutRackInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   purchase_price?: Prisma.FloatFieldUpdateOperationsInput | number
+  row?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  col?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -567,6 +641,8 @@ export type ItemUncheckedUpdateWithoutRackInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   purchase_price?: Prisma.FloatFieldUpdateOperationsInput | number
+  row?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  col?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -577,6 +653,8 @@ export type ItemUncheckedUpdateManyWithoutRackInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   purchase_price?: Prisma.FloatFieldUpdateOperationsInput | number
+  row?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  col?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -590,6 +668,8 @@ export type ItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   stock?: boolean
   purchase_price?: boolean
   rackId?: boolean
+  row?: boolean
+  col?: boolean
   description?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -602,6 +682,8 @@ export type ItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   stock?: boolean
   purchase_price?: boolean
   rackId?: boolean
+  row?: boolean
+  col?: boolean
   description?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -614,6 +696,8 @@ export type ItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   stock?: boolean
   purchase_price?: boolean
   rackId?: boolean
+  row?: boolean
+  col?: boolean
   description?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -626,12 +710,14 @@ export type ItemSelectScalar = {
   stock?: boolean
   purchase_price?: boolean
   rackId?: boolean
+  row?: boolean
+  col?: boolean
   description?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "stock" | "purchase_price" | "rackId" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["item"]>
+export type ItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "stock" | "purchase_price" | "rackId" | "row" | "col" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["item"]>
 export type ItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   rack?: boolean | Prisma.RackDefaultArgs<ExtArgs>
 }
@@ -653,6 +739,8 @@ export type $ItemPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     stock: number
     purchase_price: number
     rackId: number
+    row: number | null
+    col: number | null
     description: string | null
     createdAt: Date
     updatedAt: Date
@@ -1085,6 +1173,8 @@ export interface ItemFieldRefs {
   readonly stock: Prisma.FieldRef<"Item", 'Int'>
   readonly purchase_price: Prisma.FieldRef<"Item", 'Float'>
   readonly rackId: Prisma.FieldRef<"Item", 'Int'>
+  readonly row: Prisma.FieldRef<"Item", 'Int'>
+  readonly col: Prisma.FieldRef<"Item", 'Int'>
   readonly description: Prisma.FieldRef<"Item", 'String'>
   readonly createdAt: Prisma.FieldRef<"Item", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Item", 'DateTime'>

@@ -1,9 +1,10 @@
 "use client";
 
+import React from "react";
 import Table from "@/components/ui/Table";
-import Button from "@/components/ui/Button";
 import type { Rack } from "@/types/rack";
 import RackTableSkeleton from "./RackTableSkeleton";
+import { Edit, Trash2 } from "lucide-react";
 
 interface RackTableProps {
   data: Rack[];
@@ -38,40 +39,61 @@ export default function RackTable({
     <Table>
       <thead className="bg-gray-50 text-gray-700">
         <tr>
-          <th className="w-16 px-4 py-3 text-left font-semibold">No</th>
-          <th className="px-4 py-3 text-left font-semibold">Nama Rak</th>
-          <th className="px-4 py-3 text-left font-semibold">Kode Rak</th>
-          <th className="px-4 py-3 text-left font-semibold">Deskripsi</th>
-          <th className="px-4 py-3 text-center font-semibold">Aksi</th>
+          <th className="w-16 px-4 py-3 text-center font-semibold border-b border-gray-100">
+            No
+          </th>
+          <th className="px-4 py-3 text-left font-semibold border-b border-gray-100">
+            Nama Rak
+          </th>
+          <th className="px-4 py-3 text-left font-semibold border-b border-gray-100">
+            Kode Rak
+          </th>
+          <th className="px-4 py-3 text-left font-semibold border-b border-gray-100">
+            Deskripsi
+          </th>
+          <th className="px-4 py-3 text-center font-semibold border-b border-gray-100">
+            Aksi
+          </th>
         </tr>
       </thead>
       <tbody className="divide-y divide-gray-200">
         {data.map((rack, index) => (
-          <tr key={rack.id} className="hover:bg-gray-50 transition-colors">
-            <td className="px-4 py-3 text-sm">
-              {limit === "all" ? index + 1 : (page - 1) * limit + index + 1}
+          <tr
+            key={rack.id}
+            className="hover:bg-blue-50/50 transition-all group"
+          >
+            <td className="px-4 py-3 text-sm text-center text-slate-500">
+              {limit === "all"
+                ? index + 1
+                : (page - 1) * Number(limit) + index + 1}
             </td>
-            <td className="px-4 py-3 text-sm font-medium">{rack.name}</td>
+            <td className="px-4 py-3 text-sm font-medium text-slate-900">
+              {rack.name}
+            </td>
             <td className="px-4 py-3 text-sm">
-              <span className="bg-blue-50 text-blue-700 px-2 py-1 rounded text-xs font-mono">
+              <span className="bg-blue-50 text-blue-700 px-2.5 py-1 rounded text-[11px] font-bold font-mono tracking-wider">
                 {rack.code_rack}
               </span>
             </td>
-            <td className="px-4 py-3 text-sm text-gray-600 truncate max-w-[200px]">
+            <td className="px-4 py-3 text-sm text-slate-500 truncate max-w-[200px]">
               {(rack.description as string) || "-"}
             </td>
-            <td className="px-4 py-3 text-sm">
-              <div className="flex justify-center gap-2">
-                <Button
-                  label="Edit"
+            <td className="px-4 py-3 text-sm text-center">
+              <div className="flex justify-center gap-1">
+                <button
                   onClick={() => onEdit(rack)}
-                  className="bg-slate-400 text-white hover:bg-slate-500 border-none px-3 py-1.5 text-xs"
-                />
-                <Button
-                  label="Hapus"
+                  className="p-2 text-slate-400 hover:bg-white hover:text-blue-600 hover:shadow-sm rounded-lg transition-all"
+                  title="Edit Rak"
+                >
+                  <Edit className="w-4 h-4" />
+                </button>
+                <button
                   onClick={() => onDelete(rack)}
-                  className="bg-red-500 text-white hover:bg-red-600 border-none px-3 py-1.5 text-xs"
-                />
+                  className="p-2 text-slate-400 hover:bg-white hover:text-red-600 hover:shadow-sm rounded-lg transition-all"
+                  title="Hapus Rak"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
               </div>
             </td>
           </tr>

@@ -38,39 +38,41 @@ export default function AdminPage() {
 
   return (
     <AdminLayout>
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Overview Dashboard</h1>
-        <p className="text-gray-500">
-          Selamat datang kembali! Berikut ringkasan inventaris Anda hari ini.
+      <div className="mb-10">
+        <h1 className="text-3xl font-black text-slate-900 tracking-tight">
+          System Overview
+        </h1>
+        <p className="text-slate-500 font-medium">
+          Welcome back, Admin. Here's a summary of your Stora ecosystem today.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
         <StatsCard
           title="Total Barang"
           value={stats?.totalItems || 0}
-          icon={<Package size={24} />}
-          iconBgColor="bg-blue-50"
-          iconColor="text-blue-600"
+          icon={<Package size={22} />}
+          iconBgColor="bg-indigo-50"
+          iconColor="text-indigo-600"
         />
         <StatsCard
           title="Total Rak"
           value={stats?.totalRacks || 0}
-          icon={<Hash size={24} />}
-          iconBgColor="bg-purple-50"
-          iconColor="text-purple-600"
+          icon={<Hash size={22} />}
+          iconBgColor="bg-slate-50"
+          iconColor="text-slate-600"
         />
         <StatsCard
           title="Stok Tersedia"
           value={stats?.totalStock || 0}
-          icon={<Archive size={24} />}
-          iconBgColor="bg-green-50"
-          iconColor="text-green-600"
+          icon={<Archive size={22} />}
+          iconBgColor="bg-emerald-50"
+          iconColor="text-emerald-600"
         />
         <StatsCard
-          title="Nilai Aset"
+          title="Value Assets"
           value={formatCurrency(stats?.totalValue || 0)}
-          icon={<DollarSign size={24} />}
+          icon={<DollarSign size={22} />}
           iconBgColor="bg-amber-50"
           iconColor="text-amber-600"
         />
@@ -82,14 +84,17 @@ export default function AdminPage() {
         </div>
 
         <div className="lg:col-span-1">
-          <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl p-6 text-white shadow-lg shadow-blue-100">
-            <h3 className="font-bold text-lg mb-2">Pusat Bantuan</h3>
-            <p className="text-blue-100 text-sm mb-4">
-              Butuh bantuan mengelola inventaris? Tim kami siap membantu Anda
-              kapan saja.
+          <div className="bg-gradient-to-br from-indigo-600 to-indigo-900 rounded-[2.5rem] p-8 text-white shadow-2xl shadow-indigo-200 relative overflow-hidden group">
+            <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000" />
+            <h3 className="font-black text-xl mb-3 tracking-tight">
+              Stora Support
+            </h3>
+            <p className="text-indigo-100 text-sm mb-6 font-medium leading-relaxed">
+              Need assistance managing your assets? Our dedicated support team
+              is here to help you optimize your operations.
             </p>
-            <button className="w-full py-2.5 bg-white text-blue-600 font-bold rounded-xl hover:bg-blue-50 transition-colors text-sm">
-              Hubungi Support
+            <button className="w-full py-4 bg-white text-indigo-950 font-black rounded-2xl hover:bg-indigo-50 transition-all text-xs uppercase tracking-widest shadow-xl active:scale-95">
+              Contact Support
             </button>
           </div>
         </div>

@@ -49,6 +49,7 @@ export default function ItemTable({
           <th className="px-4 py-3 text-left font-semibold">Stok</th>
           <th className="px-4 py-3 text-left font-semibold">Harga Beli</th>
           <th className="px-4 py-3 text-left font-semibold">Rak</th>
+          <th className="px-4 py-3 text-left font-semibold">Posisi</th>
           <th className="px-4 py-3 text-center font-semibold">Aksi</th>
         </tr>
       </thead>
@@ -95,6 +96,15 @@ export default function ItemTable({
               <span className="bg-blue-50 text-blue-700 px-2 py-1 rounded text-xs font-medium">
                 {item.rack?.name || "-"}
               </span>
+            </td>
+            <td className="px-4 py-3 text-sm">
+              {item.row !== null && item.col !== null ? (
+                <span className="text-gray-500 font-mono text-xs">
+                  R:{item.row} C:{item.col}
+                </span>
+              ) : (
+                <span className="text-gray-400 text-xs italic">-</span>
+              )}
             </td>
             <td className="px-4 py-3 text-sm">
               <div className="flex justify-center gap-1">

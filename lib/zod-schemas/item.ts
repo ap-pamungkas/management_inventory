@@ -5,6 +5,16 @@ export const CreateItemSchema = z.object({
   stock: z.coerce.number().min(0, "Stok tidak boleh negatif"),
   purchase_price: z.coerce.number().min(0, "Harga beli tidak boleh negatif"),
   rackId: z.coerce.number().min(1, "Rak wajib dipilih"),
+  row: z.coerce
+    .number()
+    .min(0, "Baris tidak boleh negatif")
+    .optional()
+    .nullable(),
+  col: z.coerce
+    .number()
+    .min(0, "Kolom tidak boleh negatif")
+    .optional()
+    .nullable(),
   description: z.string().optional(),
 });
 

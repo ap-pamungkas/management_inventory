@@ -107,7 +107,7 @@ export default function ItemsPage() {
                   setSelectedItem(undefined);
                   setIsModalOpen(true);
                 }}
-                className="bg-blue-600 text-white font-medium shadow-md shadow-blue-100 px-5"
+                className="bg-indigo-600 text-white font-medium shadow-md shadow-indigo-100 px-5"
               />
             }
           >
@@ -155,7 +155,7 @@ export default function ItemsPage() {
         </div>
 
         <div className="w-full lg:w-80 xl:w-96 lg:sticky lg:top-24">
-          <Card title="Inventory Map">
+          <Card title="Stora Map">
             <div className="space-y-4">
               <div className="h-[400px] rounded-xl overflow-hidden border border-slate-100 shadow-inner">
                 <WarehouseMap racks={racks} highlightRackId={highlightRackId} />
