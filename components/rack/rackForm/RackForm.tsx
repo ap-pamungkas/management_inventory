@@ -3,6 +3,8 @@
 import { useRackForm } from "@/hooks/useRackForm";
 import type { Rack } from "@/types/rack";
 import Button from "@/components/ui/Button";
+import GridSelector from "@/components/ui/GridSelector";
+import WarehouseGridDesigner from "../WarehouseGridDesigner";
 
 interface RackFormProps {
   initialData?: Rack;
@@ -86,57 +88,70 @@ export default function RackForm({
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Posisi X (%)
-          </label>
-          <input
-            {...register("posX", { valueAsNumber: true })}
-            type="number"
-            min="0"
-            max="90"
-            className="block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm transition-all"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Posisi Y (%)
-          </label>
-          <input
-            {...register("posY", { valueAsNumber: true })}
-            type="number"
-            min="0"
-            max="90"
-            className="block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm transition-all"
-          />
-        </div>
-      </div>
+      <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 flex flex-col gap-4">
+        <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+          <span>Posisi & Ukuran di Gudang</span>
+          <div className="h-px flex-grow bg-slate-200" />
+        </h3>
 
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Lebar (%)
-          </label>
-          <input
-            {...register("width", { valueAsNumber: true })}
-            type="number"
-            min="5"
-            max="50"
-            className="block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm transition-all"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Tinggi (%)
-          </label>
-          <input
-            {...register("height", { valueAsNumber: true })}
-            type="number"
-            min="5"
-            max="50"
-            className="block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm transition-all"
-          />
+        <WarehouseGridDesigner
+          initialPosX={form.watch("posX")}
+          initialPosY={form.watch("posY")}
+          initialWidth={form.watch("width")}
+          initialHeight={form.watch("height")}
+          onChange={(pos) => {
+            form.setValue("posX", pos.posX);
+            form.setValue("posY", pos.posY);
+            form.setValue("width", pos.width);
+            form.setValue("height", pos.height);
+          }}
+        />
+
+        <div className="grid grid-cols-4 gap-3">
+          <div>
+            <label className="block text-[10px] font-bold text-slate-500 mb-1 uppercase">
+              X (%)
+            </label>
+            <input
+              {...register("posX", { valueAsNumber: true })}
+              type="number"
+              step="0.1"
+              className="block w-full rounded-lg border border-slate-300 px-3 py-1.5 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-xs transition-all text-center"
+            />
+          </div>
+          <div>
+            <label className="block text-[10px] font-bold text-slate-500 mb-1 uppercase">
+              Y (%)
+            </label>
+            <input
+              {...register("posY", { valueAsNumber: true })}
+              type="number"
+              step="0.1"
+              className="block w-full rounded-lg border border-slate-300 px-3 py-1.5 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-xs transition-all text-center"
+            />
+          </div>
+          <div>
+            <label className="block text-[10px] font-bold text-slate-500 mb-1 uppercase">
+              W (%)
+            </label>
+            <input
+              {...register("width", { valueAsNumber: true })}
+              type="number"
+              step="0.1"
+              className="block w-full rounded-lg border border-slate-300 px-3 py-1.5 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-xs transition-all text-center"
+            />
+          </div>
+          <div>
+            <label className="block text-[10px] font-bold text-slate-500 mb-1 uppercase">
+              H (%)
+            </label>
+            <input
+              {...register("height", { valueAsNumber: true })}
+              type="number"
+              step="0.1"
+              className="block w-full rounded-lg border border-slate-300 px-3 py-1.5 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-xs transition-all text-center"
+            />
+          </div>
         </div>
       </div>
 
@@ -145,35 +160,51 @@ export default function RackForm({
           <span>Konfigurasi Grid Laci/Slot</span>
           <div className="h-px flex-grow bg-blue-200" />
         </h3>
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-[11px] font-bold text-blue-700 mb-1 uppercase">
-              Jumlah Baris
-            </label>
-            <input
-              {...register("layoutRows", { valueAsNumber: true })}
-              type="number"
-              min="1"
-              max="20"
-              className="block w-full rounded-lg border border-blue-200 bg-white px-4 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm transition-all"
+        
+        <div className="flex flex-col md:flex-row gap-6 items-start">
+          <div className="flex-shrink-0">
+            <GridSelector 
+              maxRows={15} 
+              maxCols={15}
+              initialRows={form.watch("layoutRows")}
+              initialCols={form.watch("layoutCols")}
+              onChange={(rows: number, cols: number) => {
+                form.setValue("layoutRows", rows);
+                form.setValue("layoutCols", cols);
+              }}
             />
           </div>
-          <div>
-            <label className="block text-[11px] font-bold text-blue-700 mb-1 uppercase">
-              Jumlah Kolom
-            </label>
-            <input
-              {...register("layoutCols", { valueAsNumber: true })}
-              type="number"
-              min="1"
-              max="20"
-              className="block w-full rounded-lg border border-blue-200 bg-white px-4 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm transition-all"
-            />
+
+          <div className="grid grid-cols-2 gap-4 flex-grow w-full">
+            <div>
+              <label className="block text-[11px] font-bold text-blue-700 mb-1 uppercase">
+                Jumlah Baris
+              </label>
+              <input
+                {...register("layoutRows", { valueAsNumber: true })}
+                type="number"
+                min="1"
+                max="20"
+                className="block w-full rounded-lg border border-blue-200 bg-white px-4 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm transition-all"
+              />
+            </div>
+            <div>
+              <label className="block text-[11px] font-bold text-blue-700 mb-1 uppercase">
+                Jumlah Kolom
+              </label>
+              <input
+                {...register("layoutCols", { valueAsNumber: true })}
+                type="number"
+                min="1"
+                max="20"
+                className="block w-full rounded-lg border border-blue-200 bg-white px-4 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm transition-all"
+              />
+            </div>
+            <p className="col-span-2 text-[10px] text-blue-600 italic">
+              * Gunakan grid di samping untuk memilih ukuran secara visual, atau isi manual di sini.
+            </p>
           </div>
         </div>
-        <p className="text-[10px] text-blue-600 italic">
-          * Konfigurasi ini menentukan detail mapping posisi item di dalam rak.
-        </p>
       </div>
 
       <div className="flex justify-end gap-3 pt-4">

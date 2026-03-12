@@ -8,6 +8,7 @@ interface ModalProps {
   onClose: () => void;
   title: string;
   children: React.ReactNode;
+  size?: "sm" | "md" | "lg" | "xl" | "2xl";
 }
 
 export default function FormModal({
@@ -15,7 +16,15 @@ export default function FormModal({
   onClose,
   title,
   children,
+  size = "md",
 }: ModalProps) {
+  const sizeClasses = {
+    sm: "max-w-sm",
+    md: "max-w-md",
+    lg: "max-w-lg",
+    xl: "max-w-xl",
+    "2xl": "max-w-2xl",
+  };
   return (
     <AnimatePresence>
       {isOpen && (
@@ -35,7 +44,7 @@ export default function FormModal({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 10 }}
             transition={{ type: "spring", duration: 0.4, bounce: 0.3 }}
-            className="relative bg-white rounded-xl shadow-2xl w-full max-w-md overflow-hidden border border-gray-100"
+            className={`relative bg-white rounded-xl shadow-2xl w-full ${sizeClasses[size]} max-h-[90vh] flex flex-col overflow-hidden border border-gray-100`}
           >
             {/* Header */}
             <div className="flex justify-between items-center px-6 py-4 border-b border-gray-100 bg-gray-50/50">
@@ -49,7 +58,7 @@ export default function FormModal({
             </div>
 
             {/* Content */}
-            <div className="p-6 text-gray-700">{children}</div>
+            <div className="p-6 text-gray-700 overflow-y-auto flex-grow">{children}</div>
           </motion.div>
         </div>
       )}

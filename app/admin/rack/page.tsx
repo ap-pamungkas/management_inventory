@@ -145,6 +145,7 @@ export default function RackPage() {
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         title={selectedRack ? "Edit Rak" : "Tambah Rak Baru"}
+        size="xl"
       >
         <RackForm
           initialData={selectedRack}
@@ -169,6 +170,7 @@ export default function RackPage() {
         isOpen={isMapOpen}
         onClose={() => setIsMapOpen(false)}
         title="Peta Warehouse (Layout Rak)"
+        size="2xl"
       >
         <div className="space-y-4">
           <WarehouseMap

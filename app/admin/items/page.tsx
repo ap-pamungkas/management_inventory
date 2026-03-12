@@ -174,6 +174,7 @@ export default function ItemsPage() {
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         title={selectedItem ? "Edit Barang" : "Tambah Barang Baru"}
+        size="xl"
       >
         <ItemForm
           initialData={selectedItem}

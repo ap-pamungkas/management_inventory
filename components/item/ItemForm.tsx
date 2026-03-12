@@ -5,6 +5,7 @@ import { useItemForm } from "@/hooks/useItemForm";
 import type { Item } from "@/types/item";
 import type { Rack } from "@/types/rack";
 import Button from "@/components/ui/Button";
+import ItemGridSelector from "./ItemGridSelector";
 
 interface ItemFormProps {
   initialData?: Item;
@@ -127,44 +128,91 @@ export default function ItemForm({
           )}
         </div>
 
-        {/* Row & Column (Positioning) */}
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-1.5">
-            <label className="text-sm font-semibold text-gray-700 font-mono flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-blue-500" />
-              Row (Baris)
+        {/* Row & Column (Positioning) with Visual Selector */}
+        {form.watch("rackId") && racks.find(r => r.id === Number(form.watch("rackId"))) && (
+          <div className="space-y-3">
+            <label className="text-sm font-semibold text-gray-700">
+              Posisi di Dalam Rak
             </label>
-            <input
-              {...register("row")}
-              type="number"
-              className="block w-full px-4 py-2 bg-blue-50/50 border border-blue-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:text-gray-400"
-              placeholder="0"
-            />
-            {errors.row && (
-              <p className="text-xs text-red-500 font-medium">
-                {errors.row.message}
-              </p>
-            )}
+            <div className="flex flex-col md:flex-row gap-6">
+              <div className="flex-shrink-0">
+                {(() => {
+                  const selectedRack = racks.find(r => r.id === Number(form.watch("rackId")));
+                  if (!selectedRack) return null;
+                  return (
+                    <ItemGridSelector
+                      rows={selectedRack.layoutRows}
+                      cols={selectedRack.layoutCols}
+                      selectedRow={form.watch("row") ?? null}
+                      selectedCol={form.watch("col") ?? null}
+                      onSelect={(r, c) => {
+                        form.setValue("row", r);
+                        form.setValue("col", c);
+                      }}
+                      occupiedSlots={selectedRack.items?.map(item => ({
+                        row: item.row!,
+                        col: item.col!,
+                        name: item.name
+                      })).filter(item => item.row !== null && item.col !== null) || []}
+                    />
+                  );
+                })()}
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4 flex-grow">
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                    Row (Baris)
+                  </label>
+                  <input
+                    {...register("row", { valueAsNumber: true })}
+                    type="number"
+                    className="block w-full px-4 py-2 bg-blue-50/50 border border-blue-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm text-center"
+                    placeholder="0"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                    Column (Kolom)
+                  </label>
+                  <input
+                    {...register("col", { valueAsNumber: true })}
+                    type="number"
+                    className="block w-full px-4 py-2 bg-indigo-50/50 border border-indigo-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm text-center"
+                    placeholder="0"
+                  />
+                </div>
+                <p className="col-span-2 text-[10px] text-slate-500 italic">
+                  * Klik pada grid untuk memilih posisi secara visual.
+                </p>
+              </div>
+            </div>
           </div>
+        )}
 
-          <div className="space-y-1.5">
-            <label className="text-sm font-semibold text-gray-700 font-mono flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-indigo-500" />
-              Column (Kolom)
-            </label>
-            <input
-              {...register("col")}
-              type="number"
-              className="block w-full px-4 py-2 bg-indigo-50/50 border border-indigo-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all placeholder:text-gray-400"
-              placeholder="0"
-            />
-            {errors.col && (
-              <p className="text-xs text-red-500 font-medium">
-                {errors.col.message}
-              </p>
-            )}
+        {/* Manual inputs if no rack selected or as fallback */}
+        {!form.watch("rackId") && (
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <label className="text-sm font-semibold text-gray-700">Row (Baris)</label>
+              <input
+                {...register("row", { valueAsNumber: true })}
+                type="number"
+                className="block w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none"
+                placeholder="0"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <label className="text-sm font-semibold text-gray-700">Column (Kolom)</label>
+              <input
+                {...register("col", { valueAsNumber: true })}
+                type="number"
+                className="block w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none"
+                placeholder="0"
+              />
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Deskripsi */}
         <div className="space-y-1.5">
