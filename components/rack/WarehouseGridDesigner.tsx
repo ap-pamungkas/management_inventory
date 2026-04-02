@@ -9,6 +9,7 @@ interface WarehouseGridDesignerProps {
   initialHeight?: number;
   gridCols?: number;
   gridRows?: number;
+  existingRacks?: { id?: number; posX: number; posY: number; width: number; height: number }[];
   onChange: (pos: { posX: number; posY: number; width: number; height: number }) => void;
 }
 
@@ -19,6 +20,7 @@ export default function WarehouseGridDesigner({
   initialHeight = 10,
   gridCols = 20,
   gridRows = 10,
+  existingRacks = [],
   onChange,
 }: WarehouseGridDesignerProps) {
   const [selection, setSelection] = useState<{
@@ -46,13 +48,47 @@ export default function WarehouseGridDesigner({
     }
   }, []);
 
+  const isCellOccupied = useCallback((r: number, c: number) => {
+    return existingRacks.some((rack) => {
+      const rackR1 = Math.round((rack.posY / 100) * gridRows);
+      const rackC1 = Math.round((rack.posX / 100) * gridCols);
+      const rackR2 = Math.round(((rack.posY + rack.height) / 100) * gridRows) - 1;
+      const rackC2 = Math.round(((rack.posX + rack.width) / 100) * gridCols) - 1;
+      
+      const safeR1 = Math.max(0, rackR1);
+      const safeC1 = Math.max(0, rackC1);
+      const safeR2 = Math.min(gridRows - 1, rackR2);
+      const safeC2 = Math.min(gridCols - 1, rackC2);
+
+      return r >= safeR1 && r <= safeR2 && c >= safeC1 && c <= safeC2;
+    });
+  }, [existingRacks, gridRows, gridCols]);
+
+  const hasOccupiedCellsInSelection = useCallback((r1: number, c1: number, r2: number, c2: number) => {
+    const minR = Math.min(r1, r2);
+    const maxR = Math.max(r1, r2);
+    const minC = Math.min(c1, c2);
+    const maxC = Math.max(c1, c2);
+    
+    for (let r = minR; r <= maxR; r++) {
+      for (let c = minC; c <= maxC; c++) {
+        if (isCellOccupied(r, c)) return true;
+      }
+    }
+    return false;
+  }, [isCellOccupied]);
+
   const handleMouseDown = (r: number, c: number) => {
+    if (isCellOccupied(r, c)) return;
     setIsMouseDown(true);
     setSelection({ r1: r, c1: c, r2: r, c2: c });
   };
 
   const handleMouseEnter = (r: number, c: number) => {
     if (isMouseDown && selection) {
+      if (hasOccupiedCellsInSelection(selection.r1, selection.c1, r, c)) {
+        return;
+      }
       setSelection({ ...selection, r2: r, c2: c });
     }
   };
@@ -89,14 +125,23 @@ export default function WarehouseGridDesigner({
         c >= Math.min(selection.c1, selection.c2) &&
         c <= Math.max(selection.c1, selection.c2);
 
+      const occupied = isCellOccupied(r, c);
+
       cells.push(
         <div
           key={`${r}-${c}`}
           onMouseDown={() => handleMouseDown(r, c)}
           onMouseEnter={() => handleMouseEnter(r, c)}
-          className={`aspect-square border border-slate-700 transition-colors cursor-crosshair
-            ${isSelected ? "bg-indigo-500/60 border-indigo-400 brightness-110 shadow-[inset_0_0_15px_rgba(255,255,255,0.2)]" : "bg-slate-900/40 hover:bg-slate-800/60"}
+          className={`aspect-square rounded-md border border-slate-700 transition-all duration-200 ${!occupied ? "cursor-crosshair" : "cursor-not-allowed"}
+            ${
+              isSelected
+                ? "bg-indigo-500/80 border-indigo-400 shadow-[0_0_10px_rgba(99,102,241,0.5)] scale-105 z-10"
+                : occupied
+                ? "bg-red-500/20 border-red-500/40 opacity-50"
+                : "bg-slate-800/50 hover:bg-slate-700 hover:border-indigo-400"
+            }
           `}
+          title={occupied ? "Area ini sudah digunakan oleh rak lain" : ""}
         />
       );
     }
@@ -120,9 +165,9 @@ export default function WarehouseGridDesigner({
         </div>
       </div>
 
-      <div className="overflow-x-auto pb-2 -mx-2 px-2 custom-scrollbar">
+      <div className="overflow-x-auto pb-2 -mx-2 px-2 custom-scrollbar flex justify-center w-full">
         <div 
-          className="grid bg-slate-950 rounded-xl overflow-hidden border-2 border-slate-800 p-2 shadow-2xl min-w-[600px]"
+          className="grid gap-1 bg-slate-900 rounded-xl border border-slate-800 p-2 shadow-2xl min-w-[600px] w-fit"
           style={{
             gridTemplateColumns: `repeat(${gridCols}, 1fr)`,
             gridTemplateRows: `repeat(${gridRows}, 1fr)`,

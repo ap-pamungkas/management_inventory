@@ -8,12 +8,14 @@ import WarehouseGridDesigner from "../WarehouseGridDesigner";
 
 interface RackFormProps {
   initialData?: Rack;
+  existingRacks?: Rack[];
   onSuccess?: () => void;
   onCancel?: () => void;
 }
 
 export default function RackForm({
   initialData,
+  existingRacks = [],
   onSuccess,
   onCancel,
 }: RackFormProps) {
@@ -99,6 +101,7 @@ export default function RackForm({
           initialPosY={form.watch("posY")}
           initialWidth={form.watch("width")}
           initialHeight={form.watch("height")}
+          existingRacks={existingRacks.filter(r => r.id !== initialData?.id)}
           onChange={(pos) => {
             form.setValue("posX", pos.posX);
             form.setValue("posY", pos.posY);

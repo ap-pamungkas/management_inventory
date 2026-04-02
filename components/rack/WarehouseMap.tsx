@@ -58,10 +58,10 @@ const WarehouseMap: React.FC<WarehouseMapProps> = ({
                 }
               `}
               style={{
-                left: `${rack.posX}%`,
-                top: `${rack.posY}%`,
-                width: `${rack.width}%`,
-                height: `${rack.height}%`,
+                left: `calc(${rack.posX}% + 4px)`,
+                top: `calc(${rack.posY}% + 4px)`,
+                width: `calc(${rack.width}% - 8px)`,
+                height: `calc(${rack.height}% - 8px)`,
               }}
             >
               <div
